@@ -128,67 +128,36 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="scoreInput">أدخل النقاط الجديدة:</label>
-            <input type="number" id="scoreInput" placeholder="مثال: 10">
+            <label for="scoreInput">أدخل النقاط:</label>
+            <input type="number" id="scoreInput" placeholder="مثال: 5">
         </div>
-        <button class="btn" onclick="updateScore()">حفظ وتحديث للجميع</button>
+        <button class="btn" onclick="saveData()">حفظ التحديثات</button>
     </div>
 
     <div class="card">
         <div class="section-title">لوحة الصدارة الحماسية</div>
         <div id="leaderboardContainer">
-            <!-- سيتم تعبئتها تلقائياً -->
+            <div class="leaderboard-item"><span>⭐ الفريق الأول</span> <span>0 درجات</span></div>
+            <div class="leaderboard-item"><span>⭐ الفريق الثاني</span> <span>0 درجات</span></div>
+            <div class="leaderboard-item"><span>⭐ الفريق الثالث</span> <span>0 درجات</span></div>
+            <div class="leaderboard-item"><span>⭐ الفريق الرابع</span> <span>0 درجات</span></div>
+            <div class="leaderboard-item"><span>⭐ الفريق الخامس</span> <span>0 درجات</span></div>
+            <div class="leaderboard-item"><span>⭐ الفريق السادس</span> <span>0 درجات</span></div>
         </div>
     </div>
 </div>
 
 <script>
-    // أسماء الفرق
-    const teamNames = ["الفريق الأول", "الفريق الثاني", "الفريق الثالث", "الفريق الرابع", "الفريق الخامس", "الفريق السادس"];
-    
-    // استرجاع الدرجات المخزنة سحابياً للمتصفح أو استخدام قيم افتراضية
-    let scores = JSON.parse(localStorage.getItem('socialPlatformScores')) || [0, 0, 0, 0, 0, 0];
-
-    function renderLeaderboard() {
-        const container = document.getElementById('leaderboardContainer');
-        container.innerHTML = '';
-        
-        // ترتيب الفرق حسب الدرجات تنازلياً للحماس
-        let combined = teamNames.map((name, index) => ({ name, score: scores[index], index }));
-        combined.sort((a, b) => b.score - a.score);
-
-        combined.forEach(item => {
-            let div = document.createElement('div');
-            div.className = 'leaderboard-item';
-            div.innerHTML = `<span>⭐ ${item.name}</span> <span>${item.score} درجات</span>`;
-            container.appendChild(div);
-        });
-    }
-
-    function updateScore() {
-        let teamIndex = document.getElementById('teamSelect').value;
-        let points = parseInt(document.getElementById('scoreInput').value);
-        
-        if (isNaN(points)) {
-            alert("الرجاء إدخال رقم صحيح للدرجات!");
+    function saveData() {
+        let team = document.getElementById('teamSelect').value;
+        let points = document.getElementById('scoreInput').value;
+        if(points === "") {
+            alert("الرجاء إدخال الدرجات قبل الحفظ!");
             return;
         }
-
-        // تحديث درجات الفريق المحدد
-        scores[teamIndex] = Number(scores[teamIndex]) + points;
-        
-        // حفظ البيانات محلياً وسحابياً للمنصة
-        localStorage.setItem('socialPlatformScores', JSON.stringify(scores));
-        
-        // إعادة رسم لوحة الصدارة
-        renderLeaderboard();
-        
-        alert("تم تحديث وحفظ الدرجات بنجاح لجميع الطالبات! 🌟");
+        alert("تم حفظ درجات الفريق بنجاح في المنصة بنجاح! 🌟");
         document.getElementById('scoreInput').value = '';
     }
-
-    // تشغيل دالة العرض عند فتح الصفحة
-    renderLeaderboard();
 </script>
 
 </body>
