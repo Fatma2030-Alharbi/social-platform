@@ -92,10 +92,6 @@
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .royal-card:hover {
-            box-shadow: 0 14px 32px -6px rgba(8, 51, 39, 0.14);
-        }
-
         @keyframes floatCrown {
             0%, 100% { transform: translateY(0px) rotate(-2deg); }
             50% { transform: translateY(-5px) rotate(2deg); }
@@ -140,12 +136,12 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <button onclick="sharePlatformLink()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs sm:text-sm font-bold transition shadow-md" title="مشاركة الرابط">
+                    <button onclick="sharePlatformLink()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs sm:text-sm font-bold transition shadow-md">
                         <i data-lucide="share-2" class="w-4 h-4 text-gold-300"></i>
                         <span>مشاركة الرابط</span>
                     </button>
                     <div id="auth-controls-area">
-                        <button onclick="openAuthModal()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-l from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-lg">
+                        <button onclick="openAuthModal()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-l from-gold-500 to-gold-400 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-lg">
                             <i data-lucide="lock" class="w-4 h-4"></i>
                             <span>تسجيل الدخول</span>
                         </button>
@@ -159,7 +155,7 @@
                     <span>المملكة العربية السعودية • التميز التعليمي والانتماء الوطني</span>
                 </div>
 
-                <h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug gold-gradient-text drop-shadow-sm">
+                <h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug gold-gradient-text">
                     منصة الإبداع والتميز في الدراسات الاجتماعية
                 </h1>
 
@@ -205,7 +201,7 @@
                         <i data-lucide="printer" class="w-4 h-4 text-royal-800"></i>
                         <span>طباعة التقرير</span>
                     </button>
-                    <button onclick="downloadGradePDF()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-l from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-md">
+                    <button onclick="downloadGradePDF()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-l from-gold-600 to-gold-500 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-md">
                         <i data-lucide="file-down" class="w-4 h-4"></i>
                         <span>تنزيل PDF</span>
                     </button>
@@ -241,10 +237,10 @@
                 </div>
 
                 <div class="admin-only hidden flex flex-wrap md:flex-col gap-2 shrink-0">
-                    <button onclick="openNewTaskModal()" class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-royal-800 text-white text-xs font-bold transition">
+                    <button onclick="openNewTaskModal()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-royal-800 hover:bg-royal-900 text-white text-xs font-bold transition shadow">
                         <i data-lucide="plus-circle" class="w-4 h-4 text-gold-400"></i> مهمة جديدة
                     </button>
-                    <button onclick="openBackupModal()" class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-ivory-200 text-royal-950 text-xs font-bold border border-gold-400/50">
+                    <button onclick="openBackupModal()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-ivory-200 text-royal-950 text-xs font-bold border border-gold-400/50">
                         <i data-lucide="database-backup" class="w-4 h-4 text-royal-800"></i> نسخة احتياطية
                     </button>
                 </div>
@@ -314,7 +310,7 @@
         </div>
     </footer>
 
-    <!-- النافذة المنبثقة: الرؤية، الرسالة، حوكمة البيانات -->
+    <!-- نافذة معلومات الرؤية والرسالة -->
     <div id="info-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('info-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -329,32 +325,28 @@
         </div>
     </div>
 
-    <!-- نافذة تسجيل الدخول وحماية المنصة -->
+    <!-- نافذة تسجيل الدخول -->
     <div id="auth-modal" class="fixed inset-0 bg-royal-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('auth-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
             <div class="text-center mb-6">
                 <div class="w-14 h-14 rounded-2xl bg-royal-900 text-gold-400 flex items-center justify-center mx-auto mb-3 shadow-lg"><i data-lucide="shield-lock" class="w-7 h-7"></i></div>
-                <h3 id="auth-modal-heading" class="text-xl font-black text-royal-950">بوابة تحكم المعلمة المالكة</h3>
-                <p class="text-xs text-royal-700 mt-1">حماية كاملة ضد العبث (لا يتم عرض كلمة المرور نهائياً)</p>
+                <h3 class="text-xl font-black text-royal-950">بوابة تحكم المعلمة المالكة</h3>
             </div>
-
             <form id="setup-account-form" onsubmit="handleAccountSetup(event)" class="hidden space-y-4">
                 <div class="p-3 rounded-xl bg-gold-100 border border-gold-400 text-royal-900 text-xs font-semibold">أهلاً أستاذة فاطمة! حددي بيانات الدخول الخاصة بكِ لأول مرة:</div>
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">اسم المستخدم</label><input type="text" id="setup-username" required class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">كلمة المرور السرية</label><input type="password" id="setup-password" required minlength="4" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
-                <div><label class="block text-xs font-bold text-royal-900 mb-1">سؤال الأمان (لاستعادة كلمة المرور)</label><input type="text" id="setup-security-q" required placeholder="مثال: اسم مدرستي المفضلة" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm"></div>
+                <div><label class="block text-xs font-bold text-royal-900 mb-1">سؤال الأمان</label><input type="text" id="setup-security-q" required placeholder="مثال: اسم مدرستي المفضلة" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm"></div>
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">إجابة سؤال الأمان</label><input type="text" id="setup-security-a" required class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
                 <button type="submit" class="w-full py-3 rounded-xl bg-royal-900 text-gold-300 font-extrabold text-sm shadow">حفظ وتفعيل وضع الإدارة</button>
             </form>
-
             <form id="login-form" onsubmit="handleLogin(event)" class="hidden space-y-4">
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">اسم المستخدم</label><input type="text" id="login-username" required class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">كلمة المرور</label><input type="password" id="login-password" required class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
                 <div class="flex justify-between items-center text-xs font-bold"><button type="button" onclick="showRecoveryView()" class="text-gold-700 underline">نسيت كلمة المرور؟</button></div>
                 <button type="submit" class="w-full py-3 rounded-xl bg-royal-900 text-gold-300 font-extrabold text-sm shadow">دخول وفتح التحكم</button>
             </form>
-
             <form id="recovery-form" onsubmit="handlePasswordRecovery(event)" class="hidden space-y-4">
                 <div class="p-3 rounded-xl bg-ivory-100 border border-gold-300 text-xs text-royal-900"><strong>سؤال الأمان:</strong> <span id="recovery-question-display"></span></div>
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">إجابة سؤال الأمان</label><input type="text" id="recovery-answer-input" required class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold"></div>
@@ -364,11 +356,11 @@
         </div>
     </div>
 
-    <!-- نافذة تعديل المهمة وتاريخها -->
+    <!-- نافذة المهمة (تعديل أو إضافة جديدة) -->
     <div id="task-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('task-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 class="text-xl font-black text-royal-950 mb-4 flex items-center gap-2"><i data-lucide="scroll-text" class="w-6 h-6 text-gold-600"></i> <span>تعديل المهمة وتاريخها الهجري</span></h3>
+            <h3 id="task-modal-heading" class="text-xl font-black text-royal-950 mb-4 flex items-center gap-2"><i data-lucide="scroll-text" class="w-6 h-6 text-gold-600"></i> <span>إدارة المهمة الأدائية</span></h3>
             <form onsubmit="saveTaskForm(event)" class="space-y-4">
                 <input type="hidden" id="task-modal-mode" value="edit">
                 <div><label class="block text-xs font-bold text-royal-900 mb-1">عنوان المهمة الأدائية</label><input type="text" id="task-title-input" required class="w-full px-4 py-3 rounded-xl border border-royal-300 text-sm font-bold"></div>
@@ -380,7 +372,7 @@
                         <input type="text" value="1448هـ" readonly class="px-3 py-2.5 rounded-xl border border-gold-400 bg-gold-100 text-center text-sm font-black">
                     </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2"><button type="button" onclick="closeModal('task-modal')" class="px-5 py-2.5 rounded-xl bg-ivory-200 text-sm font-bold">إلغاء</button><button type="submit" class="px-6 py-2.5 rounded-xl bg-royal-900 text-gold-300 text-sm font-extrabold shadow">حفظ</button></div>
+                <div class="flex justify-end gap-2 pt-2"><button type="button" onclick="closeModal('task-modal')" class="px-5 py-2.5 rounded-xl bg-ivory-200 text-sm font-bold">إلغاء</button><button type="submit" class="px-6 py-2.5 rounded-xl bg-royal-900 text-gold-300 text-sm font-extrabold shadow">حفظ المهمة</button></div>
             </form>
         </div>
     </div>
@@ -389,9 +381,12 @@
     <div id="annual-log-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative max-h-[88vh] flex flex-col">
             <button onclick="closeModal('annual-log-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 class="text-xl font-black text-royal-950 mb-4">سجل المهام والإنجاز على مدار العام</h3>
+            <h3 class="text-xl font-black text-royal-950 mb-4">سجل المهام والإنجاز على مدار العام (1448هـ)</h3>
             <div id="annual-tasks-list" class="space-y-3 overflow-y-auto pr-1 flex-grow"></div>
-            <div class="mt-5 pt-4 border-t flex justify-end"><button onclick="closeModal('annual-log-modal')" class="px-6 py-2.5 rounded-xl bg-ivory-200 text-sm font-bold">إغلاق</button></div>
+            <div class="mt-5 pt-4 border-t flex justify-between items-center">
+                <button onclick="openNewTaskModal()" class="px-4 py-2 rounded-xl bg-royal-900 text-gold-300 text-xs font-bold flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> إضافة مهمة جديدة للصف الحالي</button>
+                <button onclick="closeModal('annual-log-modal')" class="px-6 py-2.5 rounded-xl bg-ivory-200 text-sm font-bold">إغلاق</button>
+            </div>
         </div>
     </div>
 
@@ -441,15 +436,13 @@
 
         let isAdminLoggedIn = false;
         let currentGrade = 'grade4';
-        let activeInfoModalType = 'vision';
 
         function createDefaultTeam(index) {
             return {
                 id: 'team_' + (index + 1),
                 name: ['الفريق الأول', 'الفريق الثاني', 'الفريق الثالث', 'الفريق الرابع', 'الفريق الخامس', 'الفريق السادس'][index],
                 members: { leader: '', assistant: '', designer: '', rapporteur: '', writer: '', speaker: '' },
-                scores: { quality: 0, respect: 0, accuracy: 0, cooperation: 0 },
-                values: []
+                scores: { quality: 0, respect: 0, accuracy: 0, cooperation: 0 }
             };
         }
 
@@ -465,7 +458,6 @@
         function getDefaultState() {
             const g4 = createDefaultTask('grade4'), g5 = createDefaultTask('grade5'), g6 = createDefaultTask('grade6');
             return {
-                labels: { mainTitle: 'منصة الإبداع والتميز في الدراسات الاجتماعية', subTitle: 'مسابقة تنافسية في أداء المهام لتعزيز نواتج التعلم والتحصيل الدراسي' },
                 infoContent: {
                     vision: 'الريادة والتميز في تعليم الدراسات الاجتماعية وبناء جيلٍ معتزٍ بدينه ووطنه المملكة العربية السعودية.',
                     mission: 'توفير بيئة صفية تفاعلية محفّزة قائمة على التعلم النشط والمهام الأدائية.',
@@ -498,7 +490,7 @@
             return (Number(s.quality) || 0) + (Number(s.respect) || 0) + (Number(s.accuracy) || 0) + (Number(s.cooperation) || 0);
         }
 
-        function showToast(message, type = 'success') {
+        function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `bg-royal-950 text-gold-300 border-2 border-gold-500 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-bold`;
@@ -553,7 +545,7 @@
                 renderAll();
                 showToast('أهلاً بكِ أستاذة فاطمة!');
             } else {
-                showToast('خطأ في اسم المستخدم أو كلمة المرور', 'error');
+                showToast('خطأ في اسم المستخدم أو كلمة المرور');
             }
         }
 
@@ -577,7 +569,7 @@
                 renderAll();
                 showToast('تم تحديث كلمة المرور والدخول بنجاح!');
             } else {
-                showToast('إجابة سؤال الأمان غير صحيحة', 'error');
+                showToast('إجابة سؤال الأمان غير صحيحة');
             }
         }
 
@@ -680,7 +672,6 @@
 
             document.getElementById('teams-grid').innerHTML = task.teams.map(team => {
                 const total = getTeamTotalScore(team);
-                const rank = sortedIds.indexOf(team.id);
 
                 const rolesHTML = TEAM_ROLES.map(role => {
                     const name = team.members[role.key] || '';
@@ -763,33 +754,68 @@
         function editCurrentTask() {
             if (!isAdminLoggedIn) return;
             const task = getActiveTask();
+            document.getElementById('task-modal-mode').value = 'edit';
+            document.getElementById('task-modal-heading').innerHTML = `<i data-lucide="scroll-text" class="w-6 h-6 text-gold-600"></i> <span>تعديل المهمة الحالية</span>`;
             document.getElementById('task-title-input').value = task.title;
             populateHijriSelectors(task.day, task.month);
+            openModal('task-modal');
+        }
+
+        function openNewTaskModal() {
+            if (!isAdminLoggedIn) return;
+            closeModal('annual-log-modal');
+            document.getElementById('task-modal-mode').value = 'new';
+            document.getElementById('task-modal-heading').innerHTML = `<i data-lucide="plus-circle" class="w-6 h-6 text-gold-600"></i> <span>إضافة مهمة جديدة</span>`;
+            document.getElementById('task-title-input').value = '';
+            populateHijriSelectors(15, 'ربيع الأول');
             openModal('task-modal');
         }
 
         function populateHijriSelectors(day = 15, month = 'ربيع الأول') {
             document.getElementById('hijri-day-select').innerHTML = Array.from({length:30}, (_,i)=>`<option value="${i+1}" ${i+1===day?'selected':''}>${i+1}</option>`).join('');
             document.getElementById('hijri-month-select').innerHTML = HIJRI_MONTHS_1448.map(m=>`<option value="${m}" ${m===month?'selected':''}>${m}</option>`).join('');
+            lucide.createIcons();
         }
 
         function saveTaskForm(e) {
             e.preventDefault();
-            const task = getActiveTask();
-            task.title = document.getElementById('task-title-input').value.trim();
-            task.day = Number(document.getElementById('hijri-day-select').value);
-            task.month = document.getElementById('hijri-month-select').value;
+            const mode = document.getElementById('task-modal-mode').value;
+            const title = document.getElementById('task-title-input').value.trim();
+            const day = Number(document.getElementById('hijri-day-select').value);
+            const month = document.getElementById('hijri-month-select').value;
+            const gradeData = appState.grades[currentGrade];
+
+            if (mode === 'edit') {
+                const task = getActiveTask();
+                task.title = title;
+                task.day = day;
+                task.month = month;
+                showToast('تم تعديل المهمة بنجاح!');
+            } else {
+                const newTask = {
+                    id: 'task_' + Date.now() + '_' + currentGrade,
+                    title: title,
+                    day: day,
+                    month: month,
+                    year: '1448هـ',
+                    teams: Array.from({ length: 6 }, (_, i) => createDefaultTeam(i))
+                };
+                gradeData.tasks.push(newTask);
+                gradeData.activeTaskId = newTask.id;
+                showToast('تمت إضافة المهمة الجديدة بنجاح!');
+            }
+
             saveAppState();
             closeModal('task-modal');
             renderAll();
-            showToast('تم حفظ المهمة وتاريخها بنجاح!');
         }
 
         function openAnnualLogModal() {
             const gradeData = appState.grades[currentGrade];
+            const activeId = gradeData.activeTaskId;
             document.getElementById('annual-tasks-list').innerHTML = gradeData.tasks.map((t, idx) => `
-                <div class="p-3 rounded-xl border bg-ivory-50 flex justify-between items-center text-sm font-bold">
-                    <div><strong>${t.day} ${t.month} 1448هـ:</strong> ${t.title}</div>
+                <div class="p-3 rounded-xl border ${t.id === activeId ? 'bg-gold-100 border-gold-400' : 'bg-ivory-50'} flex justify-between items-center text-sm font-bold">
+                    <div><strong>المهمة ${idx+1} (${t.day} ${t.month} 1448هـ):</strong> ${t.title} ${t.id === activeId ? '<span class="text-xs text-gold-700 bg-gold-200 px-2 py-0.5 rounded mr-2">الحالية</span>' : ''}</div>
                     <button onclick="switchTask('${t.id}')" class="px-3 py-1 bg-royal-900 text-gold-300 rounded-lg text-xs">عرض</button>
                 </div>
             `).join('');
@@ -825,7 +851,7 @@
             r.readAsText(e.target.files[0]);
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); lucide.createIcons(); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
         window.addEventListener('DOMContentLoaded', () => { renderAll(); lucide.createIcons(); });
