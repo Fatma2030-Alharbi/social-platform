@@ -4,161 +4,1845 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة الإبداع والتميز في الدراسات الاجتماعية</title>
+    <!-- خطوط عربية فخمة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- مكتبة أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- مكتبة تصدير PDF الاحترافية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- مكتبة المؤثرات الاحتفالية -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        royal: {
+                            950: '#041f18',
+                            900: '#083327',
+                            800: '#0d4a39',
+                            700: '#13634c',
+                            600: '#197d60',
+                        },
+                        gold: {
+                            100: '#fbf3db',
+                            200: '#f5e2ad',
+                            300: '#edd07b',
+                            400: '#e2b846',
+                            500: '#d4a024',
+                            600: '#b38016',
+                            700: '#8c6011',
+                        },
+                        ivory: {
+                            50: '#fdfcf8',
+                            100: '#f8f5ec',
+                            200: '#efe9d8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --primary-color: #1b4332;
-            --secondary-color: #2d6a4f;
-            --accent-color: #d4af37;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-color: #212529;
-            --border-radius: 12px;
-        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 15px;
-            direction: rtl;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background-color: #f8f5ec;
+            color: #083327;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+
+        /* خلفية هندسية وجغرافية فاخرة تعبر عن الدراسات الاجتماعية والوطن */
+        .geo-pattern-bg {
+            background-color: #06291f;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(212, 160, 36, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(25, 125, 96, 0.25) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23d4a024' stroke-opacity='0.11' stroke-width='1'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Ccircle cx='40' cy='40' r='22'/%3E%3Cpath d='M0 0L80 80M80 0L0 80' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+        .subtle-map-bg {
+            background-color: #f8f5ec;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q 30 45, 60 60 T 120 60 M0 30 Q 30 15, 60 30 T 120 30 M0 90 Q 30 75, 60 90 T 120 90' fill='none' stroke='%230d4a39' stroke-opacity='0.045' stroke-width='1.2'/%3E%3Ccircle cx='60' cy='60' r='45' fill='none' stroke='%23d4a024' stroke-opacity='0.06' stroke-dasharray='4,4'/%3E%3C/svg%3E");
         }
-        h1 {
-            margin: 0 0 10px 0;
-            font-size: 1.5rem;
-            color: var(--accent-color);
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fceabb 0%, #f8b500 45%, #e2b846 75%, #fff3c4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        p {
-            margin: 0;
-            font-size: 0.95rem;
-            opacity: 0.9;
+
+        .gold-border-glow {
+            box-shadow: 0 10px 30px -5px rgba(212, 160, 36, 0.35), 0 0 0 2px rgba(212, 160, 36, 0.65);
         }
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e9ecef;
+
+        .royal-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 160, 36, 0.25);
+            box-shadow: 0 8px 24px -6px rgba(8, 51, 39, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .section-title {
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-weight: bold;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px;
+
+        .royal-card:hover {
+            box-shadow: 0 14px 32px -6px rgba(8, 51, 39, 0.14);
         }
-        .form-group {
-            margin-bottom: 12px;
+
+        @keyframes floatCrown {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 0.9rem;
+        .crown-anim {
+            animation: floatCrown 3s ease-in-out infinite;
         }
-        select, input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            background-color: #fff;
-            box-sizing: border-box;
-        }
-        .btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 100%;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background-color: var(--secondary-color);
-        }
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background: #f1f3f5;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            font-weight: bold;
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-report-area, #printable-report-area * {
+                visibility: visible;
+            }
+            #printable-report-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                color: black !important;
+                padding: 15mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
         }
     </style>
 </head>
-<body>
+<body class="subtle-map-bg min-h-screen flex flex-col justify-between selection:bg-gold-300 selection:text-royal-950">
 
-<div class="container">
-    <header>
-        <h1>منصة الإبداع والتميز في الدراسات الاجتماعية</h1>
-        <p>العام الدراسي 1448هـ - الإدارة العامة للتعليم بمنطقة القصيم</p>
+    <!-- إشعار عائم أنيق -->
+    <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none w-11/12 max-w-md"></div>
+
+    <!-- الشريط العلوي الفاخر -->
+    <header class="geo-pattern-bg text-white border-b-4 border-gold-500 shadow-2xl relative overflow-hidden">
+        <!-- زخرفة بوصلة في الخلفية -->
+        <div class="absolute -left-16 -top-16 opacity-10 pointer-events-none">
+            <svg width="260" height="260" viewBox="0 0 100 100" fill="none" stroke="#e2b846" stroke-width="1.2">
+                <circle cx="50" cy="50" r="45"/>
+                <circle cx="50" cy="50" r="35" stroke-dasharray="2 2"/>
+                <polygon points="50,5 56,44 95,50 56,56 50,95 44,56 5,50 44,44" fill="#e2b846" fill-opacity="0.2"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 relative z-10">
+            <!-- شريط الأيقونات العلوي -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-5 border-b border-gold-500/25">
+                <!-- أيقونات الهوية والحوكمة -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <button onclick="openInfoModal('vision')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-royal-800/90 hover:bg-royal-700 border border-gold-400/40 text-gold-100 text-xs sm:text-sm font-bold transition shadow-md">
+                        <i data-lucide="eye" class="w-4 h-4 text-gold-400"></i>
+                        <span id="nav-vision-label">الرؤية</span>
+                    </button>
+
+                    <button onclick="openInfoModal('mission')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-royal-800/90 hover:bg-royal-700 border border-gold-400/40 text-gold-100 text-xs sm:text-sm font-bold transition shadow-md">
+                        <i data-lucide="compass" class="w-4 h-4 text-gold-400"></i>
+                        <span id="nav-mission-label">الرسالة</span>
+                    </button>
+
+                    <button onclick="openInfoModal('governance')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-royal-800/90 hover:bg-royal-700 border border-gold-400/40 text-gold-100 text-xs sm:text-sm font-bold transition shadow-md">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                        <span id="nav-gov-label">حوكمة البيانات</span>
+                    </button>
+                </div>
+
+                <!-- أزرار المشاركة والتحكم -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <button onclick="sharePlatformLink()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs sm:text-sm font-bold transition shadow-md" title="مشاركة الرابط">
+                        <i data-lucide="share-2" class="w-4 h-4 text-gold-300"></i>
+                        <span>مشاركة الرابط</span>
+                    </button>
+
+                    <div id="auth-controls-area">
+                        <button onclick="openAuthModal()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-l from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-lg">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                            <span>تسجيل الدخول</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الشعار الرئيسي والعنوان الفرعي (بدون أي عام هجري بالواجهة) -->
+            <div class="text-center max-w-4xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-400/40 text-gold-200 text-xs sm:text-sm font-bold mb-1">
+                    <i data-lucide="globe-2" class="w-4 h-4 text-gold-400"></i>
+                    <span>المملكة العربية السعودية • التميز التعليمي والانتماء الوطني</span>
+                </div>
+
+                <h1 id="platform-main-title" class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug gold-gradient-text drop-shadow-sm">
+                    منصة الإبداع والتميز في الدراسات الاجتماعية
+                </h1>
+
+                <p id="platform-subtitle" class="text-sm sm:text-lg md:text-xl text-ivory-100/95 font-semibold max-w-3xl mx-auto leading-relaxed">
+                    مسابقة تنافسية في أداء المهام لتعزيز نواتج التعلم والتحصيل الدراسي وتعزيز الفهم القرائي
+                </p>
+
+                <!-- شريط حالة الوضع الحالي -->
+                <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+                    <span id="mode-badge" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-950/80 text-emerald-200 border border-emerald-500/40">
+                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                        وضع المشاهدة والاستعراض
+                    </span>
+
+                    <button id="edit-header-btn" onclick="openHeaderEditModal()" class="hidden inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-gold-500 text-royal-950 hover:bg-gold-400 transition shadow">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        تعديل نصوص الواجهة والأيقونات
+                    </button>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="card">
-        <div class="section-title">إدارة فرق الفصل والدرجات</div>
-        <div class="form-group">
-            <label for="teamSelect">اختر الفريق:</label>
-            <select id="teamSelect">
-                <option value="0">الفريق الأول</option>
-                <option value="1">الفريق الثاني</option>
-                <option value="2">الفريق الثالث</option>
-                <option value="3">الفريق الرابع</option>
-                <option value="4">الفريق الخامس</option>
-                <option value="5">الفريق السادس</option>
-            </select>
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 flex-grow">
+
+        <!-- شريط اختيار الصفوف الدراسية + أزرار التقارير والسجل السنوي -->
+        <section class="royal-card rounded-2xl p-4 sm:p-5 border-2 border-gold-400/40">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <!-- تبويبات الصفوف -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3" role="tablist">
+                    <button onclick="switchGrade('grade4')" id="tab-grade4" class="grade-tab flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-sm">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                        <span>الصف الرابع الابتدائي</span>
+                    </button>
+                    <button onclick="switchGrade('grade5')" id="tab-grade5" class="grade-tab flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-sm">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                        <span>الصف الخامس الابتدائي</span>
+                    </button>
+                    <button onclick="switchGrade('grade6')" id="tab-grade6" class="grade-tab flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-sm">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                        <span>الصف السادس الابتدائي</span>
+                    </button>
+                </div>
+
+                <!-- أدوات التقارير والسجل السنوي -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <button onclick="openAnnualLogModal()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-royal-800 hover:bg-royal-900 text-white text-xs sm:text-sm font-bold transition shadow">
+                        <i data-lucide="folder-kanban" class="w-4 h-4 text-gold-400"></i>
+                        <span id="annual-log-btn-label">سجل المهام والإنجاز السنوي</span>
+                        <span id="tasks-count-badge" class="px-2 py-0.5 text-xs rounded-full bg-gold-500 text-royal-950 font-black">1</span>
+                    </button>
+
+                    <button onclick="printGradeReport()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-ivory-200 hover:bg-gold-200 text-royal-950 border border-gold-500/40 text-xs sm:text-sm font-extrabold transition shadow-sm">
+                        <i data-lucide="printer" class="w-4 h-4 text-royal-800"></i>
+                        <span>طباعة التقرير</span>
+                    </button>
+
+                    <button onclick="downloadGradePDF()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-l from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-md">
+                        <i data-lucide="file-down" class="w-4 h-4"></i>
+                        <span>تنزيل ملف PDF</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- بطاقة المهمة الأدائية الحالية وتاريخها الهجري 1448هـ تحتها مباشرة -->
+        <section class="royal-card rounded-2xl p-5 sm:p-6 border-r-8 border-r-gold-500 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="space-y-3 flex-grow">
+                    <!-- أيقونة المهمة الأدائية القابلة للتعديل -->
+                    <div class="flex items-start sm:items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-royal-900 text-gold-400 flex items-center justify-center shrink-0 shadow-md border border-gold-400/40">
+                            <i data-lucide="scroll-text" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-2">
+                                <span id="task-icon-title" class="text-xs font-extrabold uppercase tracking-wider text-gold-700 bg-gold-100 px-2.5 py-0.5 rounded-md border border-gold-300">
+                                    المهمة الأدائية
+                                </span>
+                                <button onclick="editCurrentTask()" class="admin-only hidden inline-flex items-center gap-1 text-xs font-bold text-royal-800 hover:text-gold-700 bg-ivory-200 px-2.5 py-1 rounded-lg transition">
+                                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                    تعديل المهمة والتاريخ
+                                </button>
+                            </div>
+                            <h2 id="current-task-title" class="text-lg sm:text-2xl font-black text-royal-950 mt-1">
+                                المفهوم الجغرافي والخريطة وعناصرها الأساسية
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- أيقونة تاريخ المهمة تحتها مباشرة بالتقويم الهجري 1448هـ -->
+                    <div class="flex items-center gap-3 pr-2 sm:pr-14 pt-1">
+                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-royal-900/5 border border-royal-900/15 text-royal-900">
+                            <i data-lucide="calendar-days" class="w-5 h-5 text-gold-600"></i>
+                            <span id="date-icon-title" class="text-xs sm:text-sm font-bold text-royal-700">تاريخ المهمة:</span>
+                            <span id="current-task-hijri-date" class="text-sm sm:text-base font-black text-royal-950">
+                                15 ربيع الأول 1448هـ
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار إدارة المهام للمعلمة فقط -->
+                <div class="admin-only hidden flex flex-wrap md:flex-col gap-2 shrink-0">
+                    <button onclick="openNewTaskModal()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-royal-800 hover:bg-royal-900 text-white text-xs sm:text-sm font-bold transition shadow">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-gold-400"></i>
+                        <span>إضافة مهمة جديدة وحفظ الحالية</span>
+                    </button>
+                    <button onclick="openBackupModal()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-ivory-200 hover:bg-gold-200 text-royal-950 border border-gold-400/50 text-xs font-bold transition">
+                        <i data-lucide="database-backup" class="w-4 h-4 text-royal-800"></i>
+                        <span>نسخ احتياطي / استعادة البيانات</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- منصة الصدارة الحماسية (Leaderboard) -->
+        <section class="geo-pattern-bg rounded-3xl p-5 sm:p-8 text-white shadow-2xl border-2 border-gold-500/60 relative overflow-hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 border-b border-gold-400/25 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 text-royal-950 flex items-center justify-center shadow-lg">
+                        <i data-lucide="trophy" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <h2 id="podium-section-title" class="text-xl sm:text-2xl font-black text-gold-300">
+                            منصة الصدارة الحماسية
+                        </h2>
+                        <p class="text-xs sm:text-sm text-ivory-200/85">
+                            الترتيب التنافسي المباشر للفرق حسب مجموع الدرجات المكتسبة في المهمة
+                        </p>
+                    </div>
+                </div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/10 border border-gold-400/30 text-gold-200 text-xs font-bold">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-gold-400"></i>
+                    <span id="podium-grade-label">الصف الرابع الابتدائي</span>
+                </div>
+            </div>
+
+            <!-- بطاقات المراكز الخمسة -->
+            <div id="podium-container" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end"></div>
+        </section>
+
+        <!-- شريط القيم والسلوك الإيجابي -->
+        <section class="royal-card rounded-2xl p-4 sm:p-5 border border-gold-400/40">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 id="values-section-title" class="text-base sm:text-lg font-black text-royal-950">
+                            منظومة تعزيز السلوك الإيجابي والقيم الوطنية
+                        </h3>
+                        <p class="text-xs text-royal-700">القيم المستهدفة في المهام الأدائية داخل الصف</p>
+                    </div>
+                </div>
+                <span class="admin-only hidden text-xs font-bold text-gold-700 bg-gold-100 px-3 py-1 rounded-lg border border-gold-300">
+                    يمكنكِ منح أوسمة القيم مباشرة من داخل بطاقة كل فريق أدناه
+                </span>
+            </div>
+
+            <div id="values-badges-list" class="flex flex-wrap gap-2 sm:gap-2.5"></div>
+        </section>
+
+        <!-- شبكة الفرق الستة -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center shadow">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 id="teams-section-title" class="text-xl sm:text-2xl font-black text-royal-950">
+                            الفرق التنافسية (6 فرق)
+                        </h2>
+                        <p class="text-xs sm:text-sm text-royal-700">توزيع الأدوار القيادية والتقييم وفق المعايير المعتمدة</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="teams-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+        </section>
+
+    </main>
+
+    <!-- التذييل وحقوق الملكية -->
+    <footer class="geo-pattern-bg text-ivory-100 border-t-4 border-gold-500 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
+                <div class="space-y-1">
+                    <p class="text-base sm:text-lg font-black text-gold-300">
+                        منصة الإبداع والتميز في الدراسات الاجتماعية
+                    </p>
+                    <p class="text-xs sm:text-sm text-ivory-200/80">
+                        خاضعة لضوابط حوكمة البيانات وحماية الخصوصية المعمول بها في المملكة العربية السعودية
+                    </p>
+                </div>
+
+                <div class="bg-royal-950/80 border border-gold-400/40 rounded-2xl px-5 py-3 text-center">
+                    <p class="text-sm sm:text-base font-extrabold text-gold-300">
+                        إعداد وتنفيذ معلمة المادة: فاطمة الحربي
+                    </p>
+                    <p class="text-xs text-ivory-200/75 mt-0.5">
+                        جميع الحقوق الفكرية والبرمجية محفوظة © لمعلمة المادة فاطمة الحربي
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="scoreInput">أدخل النقاط:</label>
-            <input type="number" id="scoreInput" placeholder="مثال: 5">
+    </footer>
+
+    <!-- ========================================================= -->
+    <!-- النوافذ المنبثقة (Modals) -->
+    <!-- ========================================================= -->
+
+    <!-- 1. نافذة الرؤية / الرسالة / حوكمة البيانات -->
+    <div id="info-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
+            <button onclick="closeModal('info-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 hover:bg-red-100 text-royal-900 hover:text-red-700 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div id="info-modal-icon" class="w-12 h-12 rounded-2xl bg-royal-900 text-gold-400 flex items-center justify-center"></div>
+                <h3 id="info-modal-title" class="text-xl sm:text-2xl font-black text-royal-950"></h3>
+            </div>
+            <div id="info-modal-body" class="text-royal-800 text-sm sm:text-base leading-relaxed space-y-3 bg-ivory-50 p-4 rounded-2xl border border-gold-300/50"></div>
+            <div class="mt-6 flex justify-between items-center">
+                <button onclick="editCurrentInfoModal()" class="admin-only hidden flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gold-500 text-royal-950 text-xs sm:text-sm font-bold hover:bg-gold-400 transition">
+                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    تعديل النص
+                </button>
+                <button onclick="closeModal('info-modal')" class="mr-auto px-6 py-2.5 rounded-xl bg-royal-900 text-white text-sm font-bold hover:bg-royal-800 transition">
+                    إغلاق
+                </button>
+            </div>
         </div>
-        <button class="btn" onclick="saveData()">حفظ التحديثات</button>
     </div>
 
-    <div class="card">
-        <div class="section-title">لوحة الصدارة الحماسية</div>
-        <div id="leaderboardContainer">
-            <div class="leaderboard-item"><span>⭐ الفريق الأول</span> <span>0 درجات</span></div>
-            <div class="leaderboard-item"><span>⭐ الفريق الثاني</span> <span>0 درجات</span></div>
-            <div class="leaderboard-item"><span>⭐ الفريق الثالث</span> <span>0 درجات</span></div>
-            <div class="leaderboard-item"><span>⭐ الفريق الرابع</span> <span>0 درجات</span></div>
-            <div class="leaderboard-item"><span>⭐ الفريق الخامس</span> <span>0 درجات</span></div>
-            <div class="leaderboard-item"><span>⭐ الفريق السادس</span> <span>0 درجات</span></div>
+    <!-- 2. نافذة تسجيل الدخول وإعداد الحساب واستعادة كلمة المرور -->
+    <div id="auth-modal" class="fixed inset-0 bg-royal-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
+            <button onclick="closeModal('auth-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 hover:bg-red-100 text-royal-900 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-royal-900 text-gold-400 flex items-center justify-center mx-auto mb-3 shadow-lg border border-gold-400/50">
+                    <i data-lucide="shield-lock" class="w-7 h-7"></i>
+                </div>
+                <h3 id="auth-modal-heading" class="text-xl font-black text-royal-950">بوابة تحكم المعلمة المالكة</h3>
+                <p id="auth-modal-subheading" class="text-xs sm:text-sm text-royal-700 mt-1">مخصصة لإدارة الفرق والدرجات والمهام الأدائية</p>
+            </div>
+
+            <!-- نموذج التهيئة لأول مرة -->
+            <form id="setup-account-form" onsubmit="handleAccountSetup(event)" class="hidden space-y-4">
+                <div class="p-3 rounded-xl bg-gold-100/80 border border-gold-400 text-royal-900 text-xs leading-relaxed font-semibold">
+                    مرحباً أستاذة فاطمة! يرجى تعيين اسم المستخدم وكلمة المرور الخاصة بكِ لحماية المنصة. لن يتم عرض كلمة المرور لأي زائر.
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">اسم المستخدم الخاص بكِ</label>
+                    <input type="text" id="setup-username" required autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-200 outline-none text-sm font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">كلمة المرور السرية</label>
+                    <input type="password" id="setup-password" required minlength="4" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-200 outline-none text-sm font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">سؤال الأمان (لاستعادة كلمة المرور عند نسيانها)</label>
+                    <input type="text" id="setup-security-q" required placeholder="مثال: اسم مدرستي أو مدينتي المفضلة" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">إجابة سؤال الأمان</label>
+                    <input type="text" id="setup-security-a" required autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 outline-none text-sm font-bold">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-royal-900 hover:bg-royal-800 text-gold-300 font-extrabold text-sm shadow-lg transition">
+                    حفظ بيانات الدخول وتفعيل وضع الإدارة
+                </button>
+            </form>
+
+            <!-- نموذج تسجيل الدخول -->
+            <form id="login-form" onsubmit="handleLogin(event)" class="hidden space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">اسم المستخدم</label>
+                    <input type="text" id="login-username" required autocomplete="username" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-200 outline-none text-sm font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">كلمة المرور</label>
+                    <input type="password" id="login-password" required autocomplete="current-password" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-200 outline-none text-sm font-bold">
+                </div>
+                <div class="flex items-center justify-between pt-1">
+                    <button type="button" onclick="showRecoveryView()" class="inline-flex items-center gap-1.5 text-xs font-bold text-gold-700 hover:text-royal-900 underline">
+                        <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                        استعادة كلمة المرور
+                    </button>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-l from-royal-900 to-royal-800 hover:from-royal-800 hover:to-royal-700 text-gold-300 font-extrabold text-sm shadow-lg transition">
+                    دخول وفتح صلاحيات التحكم
+                </button>
+            </form>
+
+            <!-- نموذج استعادة كلمة المرور -->
+            <form id="recovery-form" onsubmit="handlePasswordRecovery(event)" class="hidden space-y-4">
+                <div class="p-3 rounded-xl bg-ivory-100 border border-gold-300 text-xs text-royal-900">
+                    <span class="font-bold block mb-1">سؤال الأمان المسجل:</span>
+                    <span id="recovery-question-display" class="font-extrabold text-royal-800"></span>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">إجابة سؤال الأمان</label>
+                    <input type="text" id="recovery-answer-input" required autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 outline-none text-sm font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">كلمة المرور الجديدة</label>
+                    <input type="password" id="recovery-new-password" required minlength="4" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 focus:border-gold-500 outline-none text-sm font-bold">
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="openAuthModal()" class="w-1/3 py-2.5 rounded-xl bg-ivory-200 text-royal-900 font-bold text-xs">
+                        رجوع
+                    </button>
+                    <button type="submit" class="w-2/3 py-2.5 rounded-xl bg-royal-900 text-gold-300 font-extrabold text-xs shadow">
+                        تحديث كلمة المرور والدخول
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-<script>
-    function saveData() {
-        let team = document.getElementById('teamSelect').value;
-        let points = document.getElementById('scoreInput').value;
-        if(points === "") {
-            alert("الرجاء إدخال الدرجات قبل الحفظ!");
-            return;
+    <!-- 3. نافذة تعديل المهمة الأدائية وتاريخها الهجري 1448هـ -->
+    <div id="task-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 border-2 border-gold-500 shadow-2xl relative">
+            <button onclick="closeModal('task-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 id="task-modal-title" class="text-xl font-black text-royal-950 mb-4 flex items-center gap-2">
+                <i data-lucide="scroll-text" class="w-6 h-6 text-gold-600"></i>
+                <span>تعديل المهمة الأدائية والتاريخ</span>
+            </h3>
+            <form onsubmit="saveTaskForm(event)" class="space-y-4">
+                <input type="hidden" id="task-modal-mode" value="edit">
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">عنوان / وصف المهمة الأدائية</label>
+                    <input type="text" id="task-title-input" required class="w-full px-4 py-3 rounded-xl border border-royal-300 focus:border-gold-500 outline-none text-sm font-bold">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-royal-900 mb-1">تاريخ المهمة (تقويم أم القرى الهجري 1448هـ)</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <select id="hijri-day-select" class="px-3 py-2.5 rounded-xl border border-royal-300 bg-ivory-50 text-sm font-bold text-royal-950 outline-none focus:border-gold-500"></select>
+                        <select id="hijri-month-select" class="px-3 py-2.5 rounded-xl border border-royal-300 bg-ivory-50 text-sm font-bold text-royal-950 outline-none focus:border-gold-500"></select>
+                        <input type="text" value="1448هـ" readonly class="px-3 py-2.5 rounded-xl border border-gold-400 bg-gold-100/70 text-center text-sm font-black text-royal-950">
+                    </div>
+                </div>
+
+                <div id="new-task-note" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 leading-relaxed">
+                    ملاحظة: عند إضافة مهمة جديدة، سيتم حفظ المهمة الحالية ودرجاتها في <strong>سجل المهام والإنجاز السنوي</strong> تلقائياً، والبدء بمهمة جديدة مع الاحتفاظ بأسماء الطالبات في فرقهن.
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('task-modal')" class="px-5 py-2.5 rounded-xl bg-ivory-200 text-royal-900 text-sm font-bold">إلغاء</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-royal-900 hover:bg-royal-800 text-gold-300 text-sm font-extrabold shadow">حفظ واعتماد</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. نافذة سجل المهام والإنجاز السنوي -->
+    <div id="annual-log-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative max-h-[88vh] flex flex-col">
+            <button onclick="closeModal('annual-log-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-11 h-11 rounded-2xl bg-royal-900 text-gold-400 flex items-center justify-center">
+                    <i data-lucide="folder-kanban" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black text-royal-950">سجل المهام والإنجاز على مدار العام</h3>
+                    <p id="annual-log-subtitle" class="text-xs text-royal-700 font-bold"></p>
+                </div>
+            </div>
+
+            <div id="annual-tasks-list" class="space-y-3 overflow-y-auto pr-1 flex-grow"></div>
+
+            <div class="mt-5 pt-4 border-t border-ivory-200 flex justify-between items-center">
+                <button onclick="closeModal('annual-log-modal'); openNewTaskModal();" class="admin-only hidden flex items-center gap-2 px-4 py-2.5 rounded-xl bg-royal-900 text-gold-300 text-xs sm:text-sm font-bold">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    إضافة مهمة جديدة للسجل
+                </button>
+                <button onclick="closeModal('annual-log-modal')" class="mr-auto px-6 py-2.5 rounded-xl bg-ivory-200 text-royal-950 text-sm font-bold">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. نافذة تعديل جميع الأيقونات والعناوين -->
+    <div id="header-edit-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('header-edit-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="text-xl font-black text-royal-950 mb-4 flex items-center gap-2">
+                <i data-lucide="sliders" class="w-6 h-6 text-gold-600"></i>
+                <span>تخصيص وتعديل جميع أيقونات وعناوين المنصة</span>
+            </h3>
+            <form onsubmit="saveCustomLabels(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-royal-900 mb-1">اسم المنصة الرئيسي</label>
+                        <input type="text" id="edit-main-title" required class="w-full px-3.5 py-2.5 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-royal-900 mb-1">العنوان الفرعي تحت اسم المنصة</label>
+                        <input type="text" id="edit-sub-title" required class="w-full px-3.5 py-2.5 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة الرؤية</label>
+                        <input type="text" id="edit-label-vision" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة الرسالة</label>
+                        <input type="text" id="edit-label-mission" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة حوكمة البيانات</label>
+                        <input type="text" id="edit-label-gov" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة الصدارة الحماسية</label>
+                        <input type="text" id="edit-label-podium" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة المهمة الأدائية</label>
+                        <input type="text" id="edit-label-task" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة تاريخ المهمة</label>
+                        <input type="text" id="edit-label-date" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-royal-900 mb-1">مسمى أيقونة سجل المهام السنوي</label>
+                        <input type="text" id="edit-label-log" required class="w-full px-3.5 py-2 rounded-xl border border-royal-300 text-sm font-bold">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('header-edit-modal')" class="px-5 py-2.5 rounded-xl bg-ivory-200 text-royal-900 text-sm font-bold">إلغاء</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-royal-900 text-gold-300 text-sm font-extrabold">حفظ التعديلات</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. نافذة النسخ الاحتياطي واستعادة البيانات -->
+    <div id="backup-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
+            <button onclick="closeModal('backup-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="text-xl font-black text-royal-950 mb-3 flex items-center gap-2">
+                <i data-lucide="database-backup" class="w-6 h-6 text-gold-600"></i>
+                <span>إدارة وحفظ بيانات المنصة</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-royal-700 leading-relaxed mb-5">
+                تحتفظ المنصة بجميع المهام والدرجات وأسماء الطالبات تلقائياً طوال العام. يمكنكِ أيضاً تنزيل نسخة احتياطية على جهازكِ أو استعادتها في أي وقت.
+            </p>
+            <div class="space-y-3">
+                <button onclick="exportBackupJSON()" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-royal-900 hover:bg-royal-800 text-gold-300 font-bold text-sm shadow">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    تنزيل نسخة احتياطية كاملة (ملف بيانات)
+                </button>
+                <label class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-ivory-200 hover:bg-gold-200 text-royal-950 border border-gold-500/50 font-bold text-sm cursor-pointer transition">
+                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    استعادة البيانات من نسخة احتياطية سابقة
+                    <input type="file" accept=".json" onchange="importBackupJSON(event)" class="hidden">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- منطقة التقرير الرسمي للطباعة وتصدير PDF (A4) -->
+    <div id="printable-report-area" class="hidden bg-white text-black p-8 max-w-[210mm] mx-auto" dir="rtl"></div>
+
+    <!-- ========================================================= -->
+    <!-- المنطق البرمجي المتكامل (JavaScript) -->
+    <!-- ========================================================= -->
+    <script>
+        const HIJRI_MONTHS_1448 = [
+            "محرم", "صفر", "ربيع الأول", "ربيع الثاني",
+            "جمادى الأولى", "جمادى الثانية", "رجب", "شعبان",
+            "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
+        ];
+
+        const TEAM_ROLES = [
+            { key: 'leader', label: 'قائدة', icon: 'crown' },
+            { key: 'assistant', label: 'مساعدة', icon: 'user-check' },
+            { key: 'designer', label: 'مصممة', icon: 'palette' },
+            { key: 'rapporteur', label: 'مقررة', icon: 'clipboard-list' },
+            { key: 'writer', label: 'كاتبة', icon: 'pen-tool' },
+            { key: 'speaker', label: 'متحدثة', icon: 'mic' }
+        ];
+
+        const SCORE_CRITERIA = [
+            { key: 'quality', label: 'جودة العمل', max: 10 },
+            { key: 'respect', label: 'الاحترام', max: 10 },
+            { key: 'accuracy', label: 'صحة المعلومات', max: 10 },
+            { key: 'cooperation', label: 'التعاون', max: 10 }
+        ];
+
+        const POSITIVE_VALUES = [
+            { id: 'cooperation', name: 'التعاون', icon: 'handshake' },
+            { id: 'respect', name: 'الاحترام', icon: 'heart' },
+            { id: 'tolerance', name: 'التسامح', icon: 'smile' },
+            { id: 'discipline', name: 'الانضباط', icon: 'clock' },
+            { id: 'perseverance', name: 'المثابرة', icon: 'flame' },
+            { id: 'mastery', name: 'الإتقان', icon: 'star' },
+            { id: 'patriotism', name: 'الانتماء للوطن', icon: 'flag' }
+        ];
+
+        const GRADE_NAMES = {
+            grade4: 'الصف الرابع الابتدائي',
+            grade5: 'الصف الخامس الابتدائي',
+            grade6: 'الصف السادس الابتدائي'
+        };
+
+        const STORAGE_KEY = 'fatima_social_studies_platform_v1';
+        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v1';
+
+        let isAdminLoggedIn = false;
+        let currentGrade = 'grade4';
+        let activeInfoModalType = 'vision';
+
+        function createDefaultTeam(index) {
+            const names = [
+                'الفريق الأول',
+                'الفريق الثاني',
+                'الفريق الثالث',
+                'الفريق الرابع',
+                'الفريق الخامس',
+                'الفريق السادس'
+            ];
+            return {
+                id: 'team_' + (index + 1),
+                name: names[index],
+                members: {
+                    leader: '',
+                    assistant: '',
+                    designer: '',
+                    rapporteur: '',
+                    writer: '',
+                    speaker: ''
+                },
+                scores: {
+                    quality: 0,
+                    respect: 0,
+                    accuracy: 0,
+                    cooperation: 0
+                },
+                values: []
+            };
         }
-        alert("تم حفظ درجات الفريق بنجاح في المنصة بنجاح! 🌟");
-        document.getElementById('scoreInput').value = '';
-    }
-</script>
 
+        function createDefaultTask(gradeKey) {
+            const defaultTitles = {
+                grade4: 'المفهوم الجغرافي والخريطة وعناصرها الأساسية',
+                grade5: 'التاريخ الوطني والدولة السعودية الأولى',
+                grade6: 'رؤية المملكة 2030 ومقومات التنمية الوطنية'
+            };
+            return {
+                id: 'task_' + Date.now() + '_' + gradeKey,
+                title: defaultTitles[gradeKey],
+                day: 15,
+                month: 'ربيع الأول',
+                year: '1448هـ',
+                teams: Array.from({ length: 6 }, (_, i) => createDefaultTeam(i))
+            };
+        }
+
+        function getDefaultState() {
+            const g4Task = createDefaultTask('grade4');
+            const g5Task = createDefaultTask('grade5');
+            const g6Task = createDefaultTask('grade6');
+
+            return {
+                labels: {
+                    mainTitle: 'منصة الإبداع والتميز في الدراسات الاجتماعية',
+                    subTitle: 'مسابقة تنافسية في أداء المهام لتعزيز نواتج التعلم والتحصيل الدراسي وتعزيز الفهم القرائي',
+                    visionNav: 'الرؤية',
+                    missionNav: 'الرسالة',
+                    govNav: 'حوكمة البيانات',
+                    podiumTitle: 'منصة الصدارة الحماسية',
+                    taskTitle: 'المهمة الأدائية',
+                    dateTitle: 'تاريخ المهمة',
+                    annualLogBtn: 'سجل المهام والإنجاز السنوي'
+                },
+                infoContent: {
+                    vision: 'الريادة والتميز في تعليم الدراسات الاجتماعية وبناء جيلٍ معتزٍ بدينه ووطنه المملكة العربية السعودية، يمتلك مهارات التفكير الناقد والفهم القرائي والعمل التعاوني بروح تنافسية إيجابية.',
+                    mission: 'توفير بيئة صفية تفاعلية محفّزة قائمة على التعلّم النشط والمهام الأدائية، لتعزيز نواتج التعلّم والتحصيل الدراسي، وترسيخ القيم الوطنية والسلوك الإيجابي لدى الطالبات.',
+                    governance: 'تلتزم هذه المنصة بضوابط حوكمة البيانات الوطنية وحماية البيانات الشخصية المعمول بها في المملكة العربية السعودية (سدايا): حيث تُعرض البيانات لأغراض التحفيز التربوي والتعليمي فقط داخل المجتمع المدرسي، ولا يتم جمع أو مشاركة أي بيانات حساسة أو أرقام هوية أو معلومات اتصال، مع حصر صلاحية التعديل والإدارة بمعلمة المادة المالكة للمنصة.'
+                },
+                grades: {
+                    grade4: { activeTaskId: g4Task.id, tasks: [g4Task] },
+                    grade5: { activeTaskId: g5Task.id, tasks: [g5Task] },
+                    grade6: { activeTaskId: g6Task.id, tasks: [g6Task] }
+                }
+            };
+        }
+
+        let appState = loadAppState();
+
+        function loadAppState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return getDefaultState();
+                const parsed = JSON.parse(raw);
+                if (!parsed || !parsed.grades || !parsed.labels) return getDefaultState();
+                return parsed;
+            } catch (e) {
+                return getDefaultState();
+            }
+        }
+
+        function saveAppState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {
+                showToast('تنبيه: تعذر الحفظ التلقائي في المتصفح، يرجى تنزيل نسخة احتياطية.', 'error');
+            }
+        }
+
+        function getActiveTask(gradeKey = currentGrade) {
+            const gradeData = appState.grades[gradeKey];
+            let task = gradeData.tasks.find(t => t.id === gradeData.activeTaskId);
+            if (!task && gradeData.tasks.length > 0) {
+                task = gradeData.tasks[0];
+                gradeData.activeTaskId = task.id;
+            }
+            return task;
+        }
+
+        function getTeamTotalScore(team) {
+            const s = team.scores || {};
+            return (Number(s.quality) || 0) +
+                   (Number(s.respect) || 0) +
+                   (Number(s.accuracy) || 0) +
+                   (Number(s.cooperation) || 0);
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colors = type === 'error'
+                ? 'bg-red-900 text-white border-red-400'
+                : type === 'info'
+                ? 'bg-royal-900 text-gold-200 border-gold-400'
+                : 'bg-royal-950 text-gold-300 border-gold-500';
+
+            toast.className = `${colors} border-2 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-bold pointer-events-auto transition-all duration-300`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle-2'}" class="w-5 h-5 shrink-0"></i>
+                <span class="flex-grow">${message}</span>
+            `;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+
+        async function hashString(str) {
+            try {
+                const msgUint8 = new TextEncoder().encode(str.trim());
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            } catch (e) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                    hash |= 0;
+                }
+                return 'fallback_' + hash;
+            }
+        }
+
+        function getStoredAuth() {
+            try {
+                const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function openAuthModal() {
+            const authData = getStoredAuth();
+            const setupForm = document.getElementById('setup-account-form');
+            const loginForm = document.getElementById('login-form');
+            const recoveryForm = document.getElementById('recovery-form');
+
+            setupForm.classList.add('hidden');
+            loginForm.classList.add('hidden');
+            recoveryForm.classList.add('hidden');
+
+            if (!authData) {
+                document.getElementById('auth-modal-heading').textContent = 'إعداد حساب المعلمة المالكة';
+                document.getElementById('auth-modal-subheading').textContent = 'أنشئي اسم المستخدم وكلمة المرور لحماية منصتكِ';
+                setupForm.classList.remove('hidden');
+            } else {
+                document.getElementById('auth-modal-heading').textContent = 'تسجيل دخول المعلمة';
+                document.getElementById('auth-modal-subheading').textContent = 'أدخلي بياناتكِ لتفعيل وضع التحكم والتعديل';
+                loginForm.classList.remove('hidden');
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+            }
+
+            openModal('auth-modal');
+            lucide.createIcons();
+        }
+
+        async function handleAccountSetup(e) {
+            e.preventDefault();
+            const username = document.getElementById('setup-username').value.trim();
+            const password = document.getElementById('setup-password').value;
+            const question = document.getElementById('setup-security-q').value.trim();
+            const answer = document.getElementById('setup-security-a').value.trim().toLowerCase();
+
+            if (!username || !password || !question || !answer) return;
+
+            const authRecord = {
+                username: username,
+                passwordHash: await hashString(password),
+                securityQuestion: question,
+                securityAnswerHash: await hashString(answer)
+            };
+
+            localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authRecord));
+            isAdminLoggedIn = true;
+            closeModal('auth-modal');
+            updateAuthUI();
+            renderAll();
+            showToast('تم إنشاء حسابكِ بنجاح وتفعيل وضع التحكم الكامل!');
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const authData = getStoredAuth();
+            if (!authData) return openAuthModal();
+
+            const usernameInput = document.getElementById('login-username').value.trim();
+            const passwordInput = document.getElementById('login-password').value;
+            const passHash = await hashString(passwordInput);
+
+            if (usernameInput === authData.username && passHash === authData.passwordHash) {
+                isAdminLoggedIn = true;
+                closeModal('auth-modal');
+                updateAuthUI();
+                renderAll();
+                showToast('أهلاً بكِ أستاذة فاطمة! تم تفعيل وضع الإدارة والتحكم.');
+            } else {
+                showToast('اسم المستخدم أو كلمة المرور غير صحيحة.', 'error');
+            }
+        }
+
+        function showRecoveryView() {
+            const authData = getStoredAuth();
+            if (!authData) return;
+
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('setup-account-form').classList.add('hidden');
+            document.getElementById('recovery-form').classList.remove('hidden');
+            document.getElementById('auth-modal-heading').textContent = 'استعادة كلمة المرور';
+            document.getElementById('auth-modal-subheading').textContent = 'أجيبي عن سؤال الأمان لتعيين كلمة مرور جديدة';
+            document.getElementById('recovery-question-display').textContent = authData.securityQuestion;
+            document.getElementById('recovery-answer-input').value = '';
+            document.getElementById('recovery-new-password').value = '';
+        }
+
+        async function handlePasswordRecovery(e) {
+            e.preventDefault();
+            const authData = getStoredAuth();
+            if (!authData) return;
+
+            const answerInput = document.getElementById('recovery-answer-input').value.trim().toLowerCase();
+            const newPassword = document.getElementById('recovery-new-password').value;
+            const ansHash = await hashString(answerInput);
+
+            if (ansHash === authData.securityAnswerHash) {
+                authData.passwordHash = await hashString(newPassword);
+                localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authData));
+                isAdminLoggedIn = true;
+                closeModal('auth-modal');
+                updateAuthUI();
+                renderAll();
+                showToast('تم تحديث كلمة المرور بنجاح وتفعيل وضع الإدارة!');
+            } else {
+                showToast('إجابة سؤال الأمان غير مطابقة، حاولي مرة أخرى.', 'error');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            updateAuthUI();
+            renderAll();
+            showToast('تم الخروج من وضع الإدارة والعودة لوضع العرض الآمن.', 'info');
+        }
+
+        function updateAuthUI() {
+            const authArea = document.getElementById('auth-controls-area');
+            const modeBadge = document.getElementById('mode-badge');
+            const editHeaderBtn = document.getElementById('edit-header-btn');
+            const adminElements = document.querySelectorAll('.admin-only');
+
+            if (isAdminLoggedIn) {
+                authArea.innerHTML = `
+                    <button onclick="logoutAdmin()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-extrabold transition shadow-lg">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>خروج من وضع الإدارة</span>
+                    </button>
+                `;
+                modeBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-extrabold bg-gold-500 text-royal-950 shadow';
+                modeBadge.innerHTML = `<i data-lucide="crown" class="w-3.5 h-3.5"></i> وضع المعلمة المالكة (التحكم الكامل مُفعّل)`;
+                editHeaderBtn.classList.remove('hidden');
+                adminElements.forEach(el => el.classList.remove('hidden'));
+            } else {
+                authArea.innerHTML = `
+                    <button onclick="openAuthModal()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-l from-gold-500 to-gold-400 hover:from-gold-400 hover:to-gold-300 text-royal-950 text-xs sm:text-sm font-extrabold transition shadow-lg">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                        <span>تسجيل الدخول</span>
+                    </button>
+                `;
+                modeBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-950/80 text-emerald-200 border border-emerald-500/40';
+                modeBadge.innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i> وضع المشاهدة والاستعراض`;
+                editHeaderBtn.classList.add('hidden');
+                adminElements.forEach(el => el.classList.add('hidden'));
+            }
+            lucide.createIcons();
+        }
+
+        function sharePlatformLink() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: appState.labels.mainTitle,
+                    url: url
+                }).catch(() => {});
+            } else {
+                const tempInput = document.createElement('input');
+                tempInput.value = url;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast('تم نسخ رابط المنصة بنجاح!');
+            }
+        }
+
+        function openInfoModal(type) {
+            activeInfoModalType = type;
+            const iconBox = document.getElementById('info-modal-icon');
+            const titleEl = document.getElementById('info-modal-title');
+            const bodyEl = document.getElementById('info-modal-body');
+
+            if (type === 'vision') {
+                iconBox.innerHTML = `<i data-lucide="eye" class="w-6 h-6"></i>`;
+                titleEl.textContent = appState.labels.visionNav;
+                bodyEl.textContent = appState.infoContent.vision;
+            } else if (type === 'mission') {
+                iconBox.innerHTML = `<i data-lucide="compass" class="w-6 h-6"></i>`;
+                titleEl.textContent = appState.labels.missionNav;
+                bodyEl.textContent = appState.infoContent.mission;
+            } else if (type === 'governance') {
+                iconBox.innerHTML = `<i data-lucide="shield-check" class="w-6 h-6 text-emerald-400"></i>`;
+                titleEl.textContent = appState.labels.govNav;
+                bodyEl.textContent = appState.infoContent.governance;
+            }
+
+            openModal('info-modal');
+            lucide.createIcons();
+        }
+
+        function editCurrentInfoModal() {
+            if (!isAdminLoggedIn) return;
+            const bodyEl = document.getElementById('info-modal-body');
+            const currentText = appState.infoContent[activeInfoModalType];
+
+            bodyEl.innerHTML = `
+                <textarea id="inline-info-textarea" rows="5" class="w-full p-3 rounded-xl border border-gold-500 text-royal-950 text-sm font-semibold focus:outline-none">${currentText}</textarea>
+                <div class="flex justify-end gap-2 mt-2">
+                    <button onclick="saveInlineInfoModal()" class="px-4 py-1.5 rounded-lg bg-royal-900 text-gold-300 text-xs font-bold">حفظ النص</button>
+                </div>
+            `;
+        }
+
+        function saveInlineInfoModal() {
+            const textarea = document.getElementById('inline-info-textarea');
+            if (!textarea) return;
+            const newVal = textarea.value.trim();
+            if (newVal) {
+                appState.infoContent[activeInfoModalType] = newVal;
+                saveAppState();
+                openInfoModal(activeInfoModalType);
+                showToast('تم حفظ التعديل بنجاح!');
+            }
+        }
+
+        function openHeaderEditModal() {
+            if (!isAdminLoggedIn) return;
+            document.getElementById('edit-main-title').value = appState.labels.mainTitle;
+            document.getElementById('edit-sub-title').value = appState.labels.subTitle;
+            document.getElementById('edit-label-vision').value = appState.labels.visionNav;
+            document.getElementById('edit-label-mission').value = appState.labels.missionNav;
+            document.getElementById('edit-label-gov').value = appState.labels.govNav;
+            document.getElementById('edit-label-podium').value = appState.labels.podiumTitle;
+            document.getElementById('edit-label-task').value = appState.labels.taskTitle;
+            document.getElementById('edit-label-date').value = appState.labels.dateTitle;
+            document.getElementById('edit-label-log').value = appState.labels.annualLogBtn;
+            openModal('header-edit-modal');
+        }
+
+        function saveCustomLabels(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+            appState.labels.mainTitle = document.getElementById('edit-main-title').value.trim();
+            appState.labels.subTitle = document.getElementById('edit-sub-title').value.trim();
+            appState.labels.visionNav = document.getElementById('edit-label-vision').value.trim();
+            appState.labels.missionNav = document.getElementById('edit-label-mission').value.trim();
+            appState.labels.govNav = document.getElementById('edit-label-gov').value.trim();
+            appState.labels.podiumTitle = document.getElementById('edit-label-podium').value.trim();
+            appState.labels.taskTitle = document.getElementById('edit-label-task').value.trim();
+            appState.labels.dateTitle = document.getElementById('edit-label-date').value.trim();
+            appState.labels.annualLogBtn = document.getElementById('edit-label-log').value.trim();
+
+            saveAppState();
+            closeModal('header-edit-modal');
+            renderAll();
+            showToast('تم تحديث مسميات الأيقونات والعناوين بنجاح!');
+        }
+
+        function populateHijriSelectors(selectedDay = 15, selectedMonth = 'ربيع الأول') {
+            const daySelect = document.getElementById('hijri-day-select');
+            const monthSelect = document.getElementById('hijri-month-select');
+
+            daySelect.innerHTML = '';
+            for (let d = 1; d <= 30; d++) {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = d;
+                if (Number(selectedDay) === d) opt.selected = true;
+                daySelect.appendChild(opt);
+            }
+
+            monthSelect.innerHTML = '';
+            HIJRI_MONTHS_1448.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = m;
+                if (selectedMonth === m) opt.selected = true;
+                monthSelect.appendChild(opt);
+            });
+        }
+
+        function editCurrentTask() {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            document.getElementById('task-modal-mode').value = 'edit';
+            document.getElementById('task-modal-title').innerHTML = `<i data-lucide="pencil" class="w-6 h-6 text-gold-600"></i> <span>تعديل المهمة الأدائية وتاريخها</span>`;
+            document.getElementById('task-title-input').value = task.title;
+            document.getElementById('new-task-note').classList.add('hidden');
+            populateHijriSelectors(task.day, task.month);
+            openModal('task-modal');
+            lucide.createIcons();
+        }
+
+        function openNewTaskModal() {
+            if (!isAdminLoggedIn) return;
+            document.getElementById('task-modal-mode').value = 'new';
+            document.getElementById('task-modal-title').innerHTML = `<i data-lucide="plus-circle" class="w-6 h-6 text-gold-600"></i> <span>إضافة مهمة أدائية جديدة</span>`;
+            document.getElementById('task-title-input').value = '';
+            document.getElementById('new-task-note').classList.remove('hidden');
+            populateHijriSelectors(1, 'ربيع الأول');
+            openModal('task-modal');
+            lucide.createIcons();
+        }
+
+        function saveTaskForm(e) {
+            e.preventDefault();
+            if (!isAdminLoggedIn) return;
+
+            const mode = document.getElementById('task-modal-mode').value;
+            const title = document.getElementById('task-title-input').value.trim();
+            const day = Number(document.getElementById('hijri-day-select').value);
+            const month = document.getElementById('hijri-month-select').value;
+
+            if (!title) return;
+
+            if (mode === 'edit') {
+                const task = getActiveTask();
+                task.title = title;
+                task.day = day;
+                task.month = month;
+                task.year = '1448هـ';
+                showToast('تم تحديث المهمة الأدائية وتاريخها الهجري بنجاح!');
+            } else {
+                const currentTask = getActiveTask();
+                const clonedTeams = currentTask.teams.map(t => ({
+                    id: t.id,
+                    name: t.name,
+                    members: { ...t.members },
+                    scores: { quality: 0, respect: 0, accuracy: 0, cooperation: 0 },
+                    values: []
+                }));
+
+                const newTask = {
+                    id: 'task_' + Date.now(),
+                    title: title,
+                    day: day,
+                    month: month,
+                    year: '1448هـ',
+                    teams: clonedTeams
+                };
+
+                appState.grades[currentGrade].tasks.unshift(newTask);
+                appState.grades[currentGrade].activeTaskId = newTask.id;
+                showToast('تمت إضافة المهمة الجديدة وحفظ السابقة في السجل السنوي!');
+            }
+
+            saveAppState();
+            closeModal('task-modal');
+            renderAll();
+        }
+
+        function openAnnualLogModal() {
+            const gradeData = appState.grades[currentGrade];
+            document.getElementById('annual-log-subtitle').textContent = `المهام المحفوظة لـ ${GRADE_NAMES[currentGrade]} (${gradeData.tasks.length} مهام)`;
+
+            const listEl = document.getElementById('annual-tasks-list');
+            listEl.innerHTML = gradeData.tasks.map((t, idx) => {
+                const isCurrent = t.id === gradeData.activeTaskId;
+                const sorted = [...t.teams].sort((a, b) => getTeamTotalScore(b) - getTeamTotalScore(a));
+                const topTeam = sorted[0];
+                const topScore = topTeam ? getTeamTotalScore(topTeam) : 0;
+
+                return `
+                    <div class="p-4 rounded-2xl border-2 ${isCurrent ? 'border-gold-500 bg-gold-100/40' : 'border-ivory-200 bg-ivory-50'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-lg text-xs font-black ${isCurrent ? 'bg-gold-500 text-royal-950' : 'bg-royal-900 text-white'}">
+                                    ${isCurrent ? 'المهمة المعروضة حالياً' : 'مهمة محفوظة #' + (gradeData.tasks.length - idx)}
+                                </span>
+                                <span class="text-xs font-bold text-royal-700">${t.day} ${t.month} ${t.year}</span>
+                            </div>
+                            <h4 class="font-extrabold text-royal-950 text-sm sm:text-base">${t.title}</h4>
+                            <p class="text-xs text-royal-700">
+                                المتصدر: <strong class="text-royal-950">${topTeam ? topTeam.name : '-'}</strong> (${topScore} درجة)
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            ${!isCurrent ? `
+                                <button onclick="switchActiveTask('${t.id}')" class="px-3.5 py-2 rounded-xl bg-royal-900 hover:bg-royal-800 text-gold-300 text-xs font-bold transition">
+                                    عرض هذه المهمة
+                                </button>
+                            ` : ''}
+                            ${isAdminLoggedIn && gradeData.tasks.length > 1 ? `
+                                <button onclick="deleteSavedTask('${t.id}')" class="p-2 rounded-xl bg-red-100 hover:bg-red-200 text-red-700 transition" title="حذف المهمة">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            openModal('annual-log-modal');
+            lucide.createIcons();
+        }
+
+        function switchActiveTask(taskId) {
+            appState.grades[currentGrade].activeTaskId = taskId;
+            saveAppState();
+            closeModal('annual-log-modal');
+            renderAll();
+            showToast('تم عرض المهمة المختارة من السجل السنوي.');
+        }
+
+        function deleteSavedTask(taskId) {
+            if (!isAdminLoggedIn) return;
+            const gradeData = appState.grades[currentGrade];
+            if (gradeData.tasks.length <= 1) return;
+            gradeData.tasks = gradeData.tasks.filter(t => t.id !== taskId);
+            if (gradeData.activeTaskId === taskId) {
+                gradeData.activeTaskId = gradeData.tasks[0].id;
+            }
+            saveAppState();
+            openAnnualLogModal();
+            renderAll();
+            showToast('تم حذف المهمة من السجل.');
+        }
+
+        function switchGrade(gradeKey) {
+            currentGrade = gradeKey;
+            renderAll();
+        }
+
+        function updateTeamName(teamId, newName) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (team && newName.trim()) {
+                team.name = newName.trim();
+                saveAppState();
+                renderPodium();
+            }
+        }
+
+        function updateMemberName(teamId, roleKey, newName) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (team) {
+                team.members[roleKey] = newName.trim();
+                saveAppState();
+            }
+        }
+
+        function clearMemberName(teamId, roleKey) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (team) {
+                team.members[roleKey] = '';
+                saveAppState();
+                renderTeams();
+                showToast('تم مسح اسم الطالبة بنجاح، يمكنكِ كتابة اسم البديلة فوراً.');
+            }
+        }
+
+        function adjustScore(teamId, criterionKey, delta) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const prevLeader = [...task.teams].sort((a, b) => getTeamTotalScore(b) - getTeamTotalScore(a))[0];
+
+            const team = task.teams.find(t => t.id === teamId);
+            if (!team) return;
+
+            const currentVal = Number(team.scores[criterionKey]) || 0;
+            const nextVal = Math.max(0, Math.min(100, currentVal + delta));
+            team.scores[criterionKey] = nextVal;
+
+            saveAppState();
+            renderPodium();
+            renderTeams();
+
+            const newLeader = [...task.teams].sort((a, b) => getTeamTotalScore(b) - getTeamTotalScore(a))[0];
+            if (delta > 0 && newLeader && getTeamTotalScore(newLeader) > 0 && (!prevLeader || prevLeader.id !== newLeader.id)) {
+                triggerCelebration();
+            }
+        }
+
+        function setDirectScore(teamId, criterionKey, rawVal) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (!team) return;
+
+            const parsed = Math.max(0, Math.min(100, Number(rawVal) || 0));
+            team.scores[criterionKey] = parsed;
+            saveAppState();
+            renderPodium();
+            renderTeams();
+        }
+
+        function toggleTeamValue(teamId, valueId) {
+            if (!isAdminLoggedIn) return;
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (!team) return;
+
+            if (!Array.isArray(team.values)) team.values = [];
+            const idx = team.values.indexOf(valueId);
+            if (idx > -1) {
+                team.values.splice(idx, 1);
+            } else {
+                team.values.push(valueId);
+            }
+            saveAppState();
+            renderTeams();
+        }
+
+        function triggerCelebration() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 55,
+                    spread: 65,
+                    origin: { y: 0.6 },
+                    colors: ['#d4a024', '#13634c', '#ffffff']
+                });
+            }
+        }
+
+        function renderAll() {
+            document.getElementById('platform-main-title').textContent = appState.labels.mainTitle;
+            document.getElementById('platform-subtitle').textContent = appState.labels.subTitle;
+            document.getElementById('nav-vision-label').textContent = appState.labels.visionNav;
+            document.getElementById('nav-mission-label').textContent = appState.labels.missionNav;
+            document.getElementById('nav-gov-label').textContent = appState.labels.govNav;
+            document.getElementById('podium-section-title').textContent = appState.labels.podiumTitle;
+            document.getElementById('task-icon-title').textContent = appState.labels.taskTitle;
+            document.getElementById('date-icon-title').textContent = appState.labels.dateTitle + ':';
+            document.getElementById('annual-log-btn-label').textContent = appState.labels.annualLogBtn;
+
+            ['grade4', 'grade5', 'grade6'].forEach(g => {
+                const btn = document.getElementById('tab-' + g);
+                if (g === currentGrade) {
+                    btn.className = 'grade-tab flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-md bg-royal-900 text-gold-300 border-2 border-gold-500 scale-[1.02]';
+                } else {
+                    btn.className = 'grade-tab flex items-center gap-2 px-4 sm:px-5 py-3 rounded-xl font-bold text-sm sm:text-base transition-all bg-ivory-100 hover:bg-gold-100 text-royal-900 border border-gold-400/30';
+                }
+            });
+
+            const task = getActiveTask();
+            document.getElementById('current-task-title').textContent = task.title;
+            document.getElementById('current-task-hijri-date').textContent = `${task.day} ${task.month} ${task.year}`;
+            document.getElementById('podium-grade-label').textContent = GRADE_NAMES[currentGrade];
+            document.getElementById('tasks-count-badge').textContent = appState.grades[currentGrade].tasks.length;
+
+            renderValuesBar();
+            renderPodium();
+            renderTeams();
+            updateAuthUI();
+        }
+
+        function renderValuesBar() {
+            const container = document.getElementById('values-badges-list');
+            container.innerHTML = POSITIVE_VALUES.map(v => `
+                <div class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-l from-royal-900 to-royal-800 text-gold-200 border border-gold-400/40 text-xs sm:text-sm font-bold shadow-sm">
+                    <i data-lucide="${v.icon}" class="w-4 h-4 text-gold-400"></i>
+                    <span>${v.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderPodium() {
+            const task = getActiveTask();
+            const rankedTeams = [...task.teams]
+                .map(t => ({ ...t, total: getTeamTotalScore(t) }))
+                .sort((a, b) => b.total - a.total);
+
+            const topFive = rankedTeams.slice(0, 5);
+            const rankLabels = ['المركز الأول', 'المركز الثاني', 'المركز الثالث', 'المركز الرابع', 'المركز الخامس'];
+
+            const container = document.getElementById('podium-container');
+            container.innerHTML = topFive.map((team, idx) => {
+                const isFirst = idx === 0;
+                const isSecond = idx === 1;
+                const isThird = idx === 2;
+
+                if (isFirst) {
+                    return `
+                        <div class="md:col-span-1 order-first md:order-none rounded-2xl p-5 bg-gradient-to-b from-gold-400 via-gold-500 to-gold-600 text-royal-950 gold-border-glow transform md:-translate-y-2 relative overflow-hidden">
+                            <div class="flex flex-col items-center text-center space-y-2">
+                                <div class="crown-anim w-12 h-12 rounded-full bg-royal-950 text-gold-400 flex items-center justify-center shadow-lg">
+                                    <i data-lucide="crown" class="w-7 h-7"></i>
+                                </div>
+                                <span class="px-3 py-0.5 rounded-full bg-royal-950 text-gold-300 text-xs font-black tracking-wide">
+                                    ${rankLabels[idx]}
+                                </span>
+                                <h3 class="text-xl sm:text-2xl font-black leading-tight text-royal-950">
+                                    ${team.name}
+                                </h3>
+                                <div class="pt-1">
+                                    <span class="text-3xl sm:text-4xl font-black text-royal-950">${team.total}</span>
+                                    <span class="text-xs font-extrabold block text-royal-900">نقطة تميّز</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const badgeStyle = isSecond
+                    ? 'bg-slate-200 text-royal-950 border-slate-300'
+                    : isThird
+                    ? 'bg-amber-700/90 text-amber-100 border-amber-400/50'
+                    : 'bg-royal-800/90 text-gold-200 border-gold-400/30';
+
+                return `
+                    <div class="rounded-2xl p-4 bg-white/10 backdrop-blur-md border border-gold-400/35 text-center space-y-2 transition hover:bg-white/15">
+                        <span class="inline-block px-3 py-0.5 rounded-full text-xs font-extrabold border ${badgeStyle}">
+                            ${rankLabels[idx]}
+                        </span>
+                        <h4 class="text-base sm:text-lg font-extrabold text-white truncate">
+                            ${team.name}
+                        </h4>
+                        <div>
+                            <span class="text-2xl font-black text-gold-300">${team.total}</span>
+                            <span class="text-[11px] text-ivory-200 block">درجة</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function renderTeams() {
+            const task = getActiveTask();
+            const grid = document.getElementById('teams-grid');
+
+            const sortedIds = [...task.teams]
+                .sort((a, b) => getTeamTotalScore(b) - getTeamTotalScore(a))
+                .map(t => t.id);
+
+            grid.innerHTML = task.teams.map((team) => {
+                const totalScore = getTeamTotalScore(team);
+                const rankIndex = sortedIds.indexOf(team.id);
+                const isLeader = rankIndex === 0 && totalScore > 0;
+
+                const rolesHTML = TEAM_ROLES.map(role => {
+                    const studentName = team.members[role.key] || '';
+                    if (isAdminLoggedIn) {
+                        return `
+                            <div class="flex items-center gap-2 bg-ivory-50 p-2 rounded-xl border border-gold-300/60">
+                                <span class="w-20 shrink-0 inline-flex items-center gap-1.5 text-xs font-extrabold text-royal-900">
+                                    <i data-lucide="${role.icon}" class="w-3.5 h-3.5 text-gold-600"></i>
+                                    ${role.label}:
+                                </span>
+                                <input type="text"
+                                    value="${studentName.replace(/"/g, '&quot;')}"
+                                    onchange="updateMemberName('${team.id}', '${role.key}', this.value)"
+                                    placeholder="اكتبي اسم الطالبة..."
+                                    class="w-full bg-white px-2.5 py-1 rounded-lg border border-royal-200 focus:border-gold-500 text-xs font-bold text-royal-950 outline-none">
+                                ${studentName ? `
+                                    <button onclick="clearMemberName('${team.id}', '${role.key}')" title="حذف اسم الطالبة" class="p-1 rounded-lg text-red-600 hover:bg-red-100 transition shrink-0">
+                                        <i data-lucide="user-x" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="flex items-center justify-between bg-ivory-50/90 px-3 py-2 rounded-xl border border-ivory-200">
+                                <span class="inline-flex items-center gap-1.5 text-xs font-extrabold text-royal-800">
+                                    <i data-lucide="${role.icon}" class="w-3.5 h-3.5 text-gold-600"></i>
+                                    ${role.label}
+                                </span>
+                                <span class="text-xs sm:text-sm font-bold ${studentName ? 'text-royal-950' : 'text-royal-400 italic'}">
+                                    ${studentName || '—'}
+                                </span>
+                            </div>
+                        `;
+                    }
+                }).join('');
+
+                const criteriaHTML = SCORE_CRITERIA.map(c => {
+                    const val = Number(team.scores[c.key]) || 0;
+                    if (isAdminLoggedIn) {
+                        return `
+                            <div class="bg-royal-900/5 p-2.5 rounded-xl border border-royal-900/10 flex flex-col justify-between gap-1.5">
+                                <span class="text-xs font-extrabold text-royal-900 text-center">${c.label}</span>
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <button onclick="adjustScore('${team.id}', '${c.key}', -1)" class="w-7 h-7 rounded-lg bg-white hover:bg-red-100 text-royal-900 font-black border border-royal-200 flex items-center justify-center shadow-sm">-</button>
+                                    <input type="number" min="0" max="100" value="${val}"
+                                        onchange="setDirectScore('${team.id}', '${c.key}', this.value)"
+                                        class="w-12 text-center py-1 rounded-lg bg-white border border-gold-400 font-black text-sm text-royal-950 outline-none">
+                                    <button onclick="adjustScore('${team.id}', '${c.key}', 1)" class="w-7 h-7 rounded-lg bg-royal-900 hover:bg-royal-800 text-gold-300 font-black flex items-center justify-center shadow-sm">+</button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="bg-royal-900/5 p-2.5 rounded-xl border border-royal-900/10 text-center">
+                                <span class="text-[11px] font-bold text-royal-700 block">${c.label}</span>
+                                <span class="text-base font-black text-royal-950">${val}</span>
+                            </div>
+                        `;
+                    }
+                }).join('');
+
+                const teamValues = Array.isArray(team.values) ? team.values : [];
+                let valuesHTML = '';
+                if (isAdminLoggedIn) {
+                    valuesHTML = `
+                        <div class="pt-2 border-t border-ivory-200">
+                            <span class="text-[11px] font-bold text-royal-700 block mb-1.5">منح أوسمة السلوك الإيجابي والقيم:</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${POSITIVE_VALUES.map(v => {
+                                    const active = teamValues.includes(v.id);
+                                    return `
+                                        <button onclick="toggleTeamValue('${team.id}', '${v.id}')"
+                                            class="px-2 py-1 rounded-lg text-[11px] font-bold transition border ${active ? 'bg-emerald-800 text-gold-200 border-gold-400 shadow-sm' : 'bg-ivory-100 text-royal-600 border-ivory-200 hover:bg-gold-100'}">
+                                            ${active ? '★ ' : '+ '}${v.name}
+                                        </button>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (teamValues.length > 0) {
+                    valuesHTML = `
+                        <div class="pt-2 border-t border-ivory-200 flex flex-wrap gap-1.5">
+                            ${teamValues.map(vid => {
+                                const vObj = POSITIVE_VALUES.find(x => x.id === vid);
+                                return vObj ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-900 text-gold-300 text-[11px] font-bold">★ ${vObj.name}</span>` : '';
+                            }).join('')}
+                        </div>
+                    `;
+                }
+
+                return `
+                    <article class="royal-card rounded-3xl overflow-hidden flex flex-col justify-between ${isLeader ? 'ring-2 ring-gold-500' : ''}">
+                        <div class="geo-pattern-bg p-4 text-white border-b-2 border-gold-500 flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2.5 flex-grow min-w-0">
+                                <div class="w-9 h-9 rounded-xl bg-gold-500 text-royal-950 font-black flex items-center justify-center shrink-0 shadow">
+                                    ${isLeader ? '<i data-lucide="crown" class="w-5 h-5"></i>' : (rankIndex + 1)}
+                                </div>
+                                ${isAdminLoggedIn ? `
+                                    <input type="text" value="${team.name.replace(/"/g, '&quot;')}"
+                                        onchange="updateTeamName('${team.id}', this.value)"
+                                        class="bg-white/15 text-white font-black text-base px-2.5 py-1 rounded-lg border border-gold-400/50 focus:border-gold-300 outline-none w-full">
+                                ` : `
+                                    <h3 class="text-lg font-black text-gold-200 truncate">${team.name}</h3>
+                                `}
+                            </div>
+                            <div class="bg-royal-950/90 border border-gold-400/50 px-3 py-1 rounded-xl text-center shrink-0">
+                                <span class="text-lg font-black text-gold-400 leading-none block">${totalScore}</span>
+                                <span class="text-[10px] text-ivory-200">المجموع</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 space-y-4 flex-grow">
+                            <div class="space-y-1.5">
+                                ${rolesHTML}
+                            </div>
+
+                            <div>
+                                <div class="text-xs font-extrabold text-royal-800 mb-2 flex items-center gap-1.5">
+                                    <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 text-gold-600"></i>
+                                    <span>درجات تقييم المهمة الأدائية:</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    ${criteriaHTML}
+                                </div>
+                            </div>
+
+                            ${valuesHTML}
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function buildOfficialReportHTML() {
+            const task = getActiveTask();
+            const gradeTitle = GRADE_NAMES[currentGrade];
+            const hijriDateStr = `${task.day} ${task.month} ${task.year}`;
+
+            const rankedTeams = [...task.teams]
+                .map(t => ({ ...t, total: getTeamTotalScore(t) }))
+                .sort((a, b) => b.total - a.total);
+
+            const rowsHTML = task.teams.map((team, index) => {
+                const total = getTeamTotalScore(team);
+                const rank = rankedTeams.findIndex(r => r.id === team.id) + 1;
+                const membersText = TEAM_ROLES.map(r => {
+                    const name = team.members[r.key] || '—';
+                    return `<div style="margin-bottom:2px;"><strong>${r.label}:</strong> ${name}</div>`;
+                }).join('');
+
+                const valuesText = (team.values || [])
+                    .map(vid => POSITIVE_VALUES.find(v => v.id === vid)?.name)
+                    .filter(Boolean)
+                    .join(' • ') || '—';
+
+                return `
+                    <tr style="background-color: ${index % 2 === 0 ? '#ffffff' : '#f8f5ec'};">
+                        <td style="border:1px solid #083327; padding:8px; font-weight:bold; text-align:center;">${team.name}</td>
+                        <td style="border:1px solid #083327; padding:8px; font-size:11px; line-height:1.4;">${membersText}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:bold;">${team.scores.quality || 0}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:bold;">${team.scores.respect || 0}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:bold;">${team.scores.accuracy || 0}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:bold;">${team.scores.cooperation || 0}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:900; background:#fbf3db; color:#083327; font-size:14px;">${total}</td>
+                        <td style="border:1px solid #083327; padding:8px; text-align:center; font-weight:bold;">المركز ${rank}</td>
+                        <td style="border:1px solid #083327; padding:8px; font-size:11px; text-align:center;">${valuesText}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <div style="font-family: 'Cairo', sans-serif; color: #083327; direction: rtl; border: 3px double #b38016; padding: 20px; border-radius: 12px; background: #ffffff;">
+                    <div style="text-align: center; border-bottom: 2px solid #083327; padding-bottom: 14px; margin-bottom: 16px;">
+                        <p style="margin:0; font-size: 13px; font-weight: 700; color: #13634c;">المملكة العربية السعودية • وزارة التعليم</p>
+                        <h1 style="margin:6px 0; font-size: 22px; font-weight: 900; color: #083327;">${appState.labels.mainTitle}</h1>
+                        <p style="margin:0; font-size: 13px; color: #8c6011; font-weight: 700;">${appState.labels.subTitle}</p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; background: #f8f5ec;">
+                        <tr>
+                            <td style="border: 1px solid #b38016; padding: 8px 12px; font-size: 13px;"><strong>الصف الدراسي:</strong> ${gradeTitle}</td>
+                            <td style="border: 1px solid #b38016; padding: 8px 12px; font-size: 13px;"><strong>تاريخ المهمة:</strong> ${hijriDateStr}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border: 1px solid #b38016; padding: 8px 12px; font-size: 14px;"><strong>المهمة الأدائية:</strong> ${task.title}</td>
+                        </tr>
+                    </table>
+
+                    <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+                        <thead>
+                            <tr style="background-color: #083327; color: #f5e2ad;">
+                                <th style="border:1px solid #083327; padding:8px;">الفريق</th>
+                                <th style="border:1px solid #083327; padding:8px; width: 26%;">أعضاء الفريق والأدوار</th>
+                                <th style="border:1px solid #083327; padding:8px;">جودة العمل</th>
+                                <th style="border:1px solid #083327; padding:8px;">الاحترام</th>
+                                <th style="border:1px solid #083327; padding:8px;">صحة المعلومات</th>
+                                <th style="border:1px solid #083327; padding:8px;">التعاون</th>
+                                <th style="border:1px solid #083327; padding:8px;">المجموع</th>
+                                <th style="border:1px solid #083327; padding:8px;">الترتيب</th>
+                                <th style="border:1px solid #083327; padding:8px;">أوسمة القيم</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHTML}
+                        </tbody>
+                    </table>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #083327; padding-top: 12px; margin-top: 10px;">
+                        <div style="font-size: 12px; color: #13634c;">
+                            تقرير إنجاز وتقييم المهام الأدائية التنافسية • خاضع لضوابط حوكمة البيانات
+                        </div>
+                        <div style="text-align: left; font-size: 14px; font-weight: 900; color: #083327;">
+                            معلمة المادة: فاطمة الحربي
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function printGradeReport() {
+            const reportArea = document.getElementById('printable-report-area');
+            reportArea.innerHTML = buildOfficialReportHTML();
+            reportArea.classList.remove('hidden');
+
+            setTimeout(() => {
+                window.print();
+                reportArea.classList.add('hidden');
+            }, 250);
+        }
+
+        function downloadGradePDF() {
+            const reportArea = document.getElementById('printable-report-area');
+            reportArea.innerHTML = buildOfficialReportHTML();
+            reportArea.classList.remove('hidden');
+
+            const task = getActiveTask();
+            const filename = `تقرير_${GRADE_NAMES[currentGrade]}_${task.day}_${task.month}_1448هـ.pdf`.replace(/\s+/g, '_');
+
+            showToast('جاري تجهيز وتنزيل ملف PDF الرسمي...', 'info');
+
+            if (typeof html2pdf !== 'undefined') {
+                const opt = {
+                    margin: 8,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf().set(opt).from(reportArea).save().then(() => {
+                    reportArea.classList.add('hidden');
+                    showToast('تم تنزيل ملف PDF بنجاح!');
+                }).catch(() => {
+                    reportArea.classList.add('hidden');
+                    printGradeReport();
+                });
+            } else {
+                reportArea.classList.add('hidden');
+                printGradeReport();
+            }
+        }
+
+        function openBackupModal() {
+            if (!isAdminLoggedIn) return;
+            openModal('backup-modal');
+        }
+
+        function exportBackupJSON() {
+            const dataStr = JSON.stringify(appState, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `نسخة_احتياطية_منصة_الدراسات_الاجتماعية_فاطمة_الحربي.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('تم تنزيل النسخة الاحتياطية بنجاح!');
+        }
+
+        function importBackupJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && imported.grades && imported.labels) {
+                        appState = imported;
+                        saveAppState();
+                        closeModal('backup-modal');
+                        renderAll();
+                        showToast('تمت استعادة جميع البيانات والمهام بنجاح!');
+                    } else {
+                        showToast('ملف النسخة الاحتياطية غير صالح.', 'error');
+                    }
+                } catch (err) {
+                    showToast('حدث خطأ أثناء قراءة الملف.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.querySelectorAll('.fixed.inset-0').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay && overlay.id !== 'toast-container') {
+                    closeModal(overlay.id);
+                }
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
