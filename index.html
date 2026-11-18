@@ -442,6 +442,20 @@
         </div>
     </div>
 
+    <!-- نافذة إدخال رابط الصورة المباشر -->
+    <div id="url-modal" class="fixed inset-0 bg-royal-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 border-2 border-gold-500 shadow-2xl relative">
+            <button onclick="closeModal('url-modal')" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 class="text-lg font-black text-royal-950 mb-3">إدخال رابط صورة الإنجاز المباشر</h3>
+            <p class="text-xs text-royal-700 mb-3">أدخلي رابط الصورة المباشر (مثل رابط مرفوع على غيت هاب أو مراكز التحعيل) لضمان ظهورها لجميع الزوار عبر الإنترنت:</p>
+            <input type="url" id="direct-image-url" placeholder="https://example.com/image.jpg" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold mb-4">
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeModal('url-modal')" class="px-4 py-2 rounded-xl bg-ivory-200 text-xs font-bold">إلغاء</button>
+                <button type="button" onclick="saveDirectImageUrl()" class="px-5 py-2 rounded-xl bg-royal-900 text-gold-300 text-xs font-extrabold">حفظ وعرض الصورة</button>
+            </div>
+        </div>
+    </div>
+
     <!-- نافذة عرض الصورة بكامل الحجم -->
     <div id="image-modal" class="fixed inset-0 bg-royal-950/85 backdrop-blur-sm z-[120] hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-4 border-2 border-gold-500 shadow-2xl relative text-center">
@@ -505,11 +519,12 @@
         ];
         const GRADE_NAMES = { grade4: 'الصف الرابع الابتدائي', grade5: 'الصف الخامس الابتدائي', grade6: 'الصف السادس الابتدائي' };
 
-        const STORAGE_KEY = 'fatima_social_studies_platform_v4';
-        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v4';
+        const STORAGE_KEY = 'fatima_social_studies_platform_v5';
+        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v5';
 
         let isAdminLoggedIn = false;
         let currentGrade = 'grade4';
+        let activeImageTeamId = null;
         let teamsBarChartInstance = null;
         let growthLineChartInstance = null;
 
@@ -811,11 +826,17 @@
                                 ` : ''}
 
                                 ${isAdminLoggedIn ? `
-                                    <label class="w-full py-2 px-3 rounded-xl bg-ivory-100 hover:bg-gold-100 text-royal-950 border border-dashed border-gold-400 text-xs font-bold cursor-pointer flex items-center justify-center gap-2 transition">
-                                        <i data-lucide="upload" class="w-4 h-4 text-royal-800"></i>
-                                        <span>${taskImg ? 'تغيير صورة الإنجاز' : 'إرفاق صورة إنجاز المهمة'}</span>
-                                        <input type="file" accept="image/*" onchange="uploadTeamImage(event, '${team.id}')" class="hidden">
-                                    </label>
+                                    <div class="flex gap-2">
+                                        <label class="w-1/2 py-2 px-2 rounded-xl bg-ivory-100 hover:bg-gold-100 text-royal-950 border border-dashed border-gold-400 text-xs font-bold cursor-pointer flex items-center justify-center gap-1 transition">
+                                            <i data-lucide="upload" class="w-3.5 h-3.5 text-royal-800"></i>
+                                            <span>رفع ملف</span>
+                                            <input type="file" accept="image/*" onchange="compressAndUploadImage(event, '${team.id}')" class="hidden">
+                                        </label>
+                                        <button onclick="openUrlModal('${team.id}')" class="w-1/2 py-2 px-2 rounded-xl bg-royal-900 text-gold-300 hover:bg-royal-800 text-xs font-bold flex items-center justify-center gap-1 transition shadow-sm">
+                                            <i data-lucide="link" class="w-3.5 h-3.5 text-gold-400"></i>
+                                            <span>رابط مباشر</span>
+                                        </button>
+                                    </div>
                                 ` : (!taskImg ? `<div class="text-center py-2 text-[11px] text-gray-500 italic">لم يتم إرفاق صورة بعد</div>` : '')}
                             </div>
                         </div>
@@ -825,17 +846,57 @@
             lucide.createIcons();
         }
 
-        function uploadTeamImage(e, teamId) {
+        // ضغط وتصغير الصور تلقائياً لتعمل بكفاءة
+        function compressAndUploadImage(e, teamId) {
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(evt) {
-                getActiveTask().teams.find(t => t.id === teamId).taskImage = evt.target.result;
-                saveAppState();
-                renderTeams();
-                showToast('تم إرفاق صورة الإنجاز بنجاح!');
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 600;
+                    const MAX_HEIGHT = 600;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    } else {
+                        if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+                    getActiveTask().teams.find(t => t.id === teamId).taskImage = dataUrl;
+                    saveAppState();
+                    renderTeams();
+                    showToast('تم ضغط وإرفاق صورة الإنجاز بنجاح!');
+                }
+                img.src = evt.target.result;
             };
             reader.readAsDataURL(file);
+        }
+
+        function openUrlModal(teamId) {
+            activeImageTeamId = teamId;
+            document.getElementById('direct-image-url').value = '';
+            openModal('url-modal');
+        }
+
+        function saveDirectImageUrl() {
+            const url = document.getElementById('direct-image-url').value.trim();
+            if (url && activeImageTeamId) {
+                getActiveTask().teams.find(t => t.id === activeImageTeamId).taskImage = url;
+                saveAppState();
+                renderTeams();
+                closeModal('url-modal');
+                showToast('تم تحديث رابط الصورة المباشر بنجاح!');
+            }
         }
 
         function removeTeamImage(teamId) {
@@ -1067,7 +1128,7 @@
             r.readAsText(e.target.files[0]);
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); lucide.createIcons(); }
+        function openModal(id) { document.getElementById(id).classList.add('flex'); document.getElementById(id).classList.remove('hidden'); lucide.createIcons(); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
         window.addEventListener('DOMContentLoaded', () => { renderAll(); lucide.createIcons(); });
