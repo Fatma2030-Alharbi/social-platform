@@ -249,7 +249,7 @@
             </div>
         </section>
 
-        <!-- القسم التحليلي الجديد لنسبة التحسن ونواتج التعلم -->
+        <!-- القسم التحليلي التراكمي -->
         <section class="royal-card rounded-3xl p-5 sm:p-6 border-2 border-gold-400/50 space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gold-300/40">
                 <div class="flex items-center gap-3">
@@ -267,7 +267,7 @@
                 </div>
             </div>
 
-            <!-- بطاقات مؤشرات الأداء السريعة (KPIs) -->
+            <!-- بطاقات مؤشرات الأداء السريعة -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-ivory-50 p-4 rounded-2xl border border-gold-300/60 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center"><i data-lucide="award" class="w-5 h-5"></i></div>
@@ -346,7 +346,7 @@
             <div id="values-badges-list" class="flex flex-wrap gap-2"></div>
         </section>
 
-        <!-- شبكة الفرق الستة -->
+        <!-- شبكة الفرق الستة مع إمكانية إرفاق صورة وإبداء الإعجاب -->
         <section class="space-y-4">
             <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center shadow">
@@ -354,7 +354,7 @@
                 </div>
                 <div>
                     <h2 class="text-xl sm:text-2xl font-black text-royal-950">الفرق التنافسية الستة والأدوار القيادية</h2>
-                    <p class="text-xs sm:text-sm text-royal-700">يمكنكِ تعديل أو مسح أسماء الطالبات والدرجات بكل سهولة عند تسجيل الدخول</p>
+                    <p class="text-xs sm:text-sm text-royal-700">يمكنكِ تعديل الأسماء والدرجات وإرفاق صور الإنجاز ليشاهدها أولياء الأمور والمجتمع المدرسي</p>
                 </div>
             </div>
             <div id="teams-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
@@ -442,6 +442,15 @@
         </div>
     </div>
 
+    <!-- نافذة عرض الصورة بكامل الحجم -->
+    <div id="image-modal" class="fixed inset-0 bg-royal-950/85 backdrop-blur-sm z-[120] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-4 border-2 border-gold-500 shadow-2xl relative text-center">
+            <button onclick="closeModal('image-modal')" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center z-10"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 class="text-base font-black text-royal-950 mb-3">صورة إنجاز الفريق</h3>
+            <img id="modal-preview-img" src="" class="max-h-[70vh] mx-auto rounded-2xl object-contain border border-gold-300" alt="صورة إنجاز">
+        </div>
+    </div>
+
     <!-- نافذة سجل المهام السنوي -->
     <div id="annual-log-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative max-h-[88vh] flex flex-col">
@@ -496,8 +505,8 @@
         ];
         const GRADE_NAMES = { grade4: 'الصف الرابع الابتدائي', grade5: 'الصف الخامس الابتدائي', grade6: 'الصف السادس الابتدائي' };
 
-        const STORAGE_KEY = 'fatima_social_studies_platform_v3';
-        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v3';
+        const STORAGE_KEY = 'fatima_social_studies_platform_v4';
+        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v4';
 
         let isAdminLoggedIn = false;
         let currentGrade = 'grade4';
@@ -509,7 +518,9 @@
                 id: 'team_' + (index + 1),
                 name: ['الفريق الأول', 'الفريق الثاني', 'الفريق الثالث', 'الفريق الرابع', 'الفريق الخامس', 'الفريق السادس'][index],
                 members: { leader: '', assistant: '', designer: '', rapporteur: '', writer: '', speaker: '' },
-                scores: { quality: 0, respect: 0, accuracy: 0, cooperation: 0 }
+                scores: { quality: 0, respect: 0, accuracy: 0, cooperation: 0 },
+                taskImage: '',
+                likesCount: 0
             };
         }
 
@@ -738,6 +749,8 @@
             const task = getActiveTask();
             document.getElementById('teams-grid').innerHTML = task.teams.map(team => {
                 const total = getTeamTotalScore(team);
+                const likes = team.likesCount || 0;
+                const taskImg = team.taskImage || '';
 
                 const rolesHTML = TEAM_ROLES.map(role => {
                     const name = team.members[role.key] || '';
@@ -779,11 +792,72 @@
                         <div class="p-4 space-y-3 flex-grow">
                             <div class="space-y-1.5">${rolesHTML}</div>
                             <div class="grid grid-cols-2 gap-2">${criteriaHTML}</div>
+
+                            <!-- قسم صورة إنجاز الفريق والإعجابات -->
+                            <div class="pt-2 border-t border-gold-300/40 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-royal-900 flex items-center gap-1"><i data-lucide="image" class="w-3.5 h-3.5 text-gold-600"></i> إنجاز المهمة:</span>
+                                    <button onclick="likeTeam('${team.id}')" class="flex items-center gap-1 px-3 py-1 rounded-full bg-gold-100 hover:bg-gold-200 text-royal-950 text-xs font-black border border-gold-400 transition shadow-sm">
+                                        <i data-lucide="heart" class="w-3.5 h-3.5 text-red-600 fill-red-500"></i>
+                                        <span>إعجاب (<span id="likes-${team.id}">${likes}</span>)</span>
+                                    </button>
+                                </div>
+
+                                ${taskImg ? `
+                                    <div class="relative group rounded-xl overflow-hidden border border-gold-400 bg-ivory-100">
+                                        <img src="${taskImg}" onclick="openImageModal('${taskImg}')" class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition duration-300" alt="صورة إنجاز الفريق">
+                                        ${isAdminLoggedIn ? `<button onclick="removeTeamImage('${team.id}')" class="absolute top-2 left-2 bg-red-600 text-white p-1 rounded-lg text-xs shadow"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                                    </div>
+                                ` : ''}
+
+                                ${isAdminLoggedIn ? `
+                                    <label class="w-full py-2 px-3 rounded-xl bg-ivory-100 hover:bg-gold-100 text-royal-950 border border-dashed border-gold-400 text-xs font-bold cursor-pointer flex items-center justify-center gap-2 transition">
+                                        <i data-lucide="upload" class="w-4 h-4 text-royal-800"></i>
+                                        <span>${taskImg ? 'تغيير صورة الإنجاز' : 'إرفاق صورة إنجاز المهمة'}</span>
+                                        <input type="file" accept="image/*" onchange="uploadTeamImage(event, '${team.id}')" class="hidden">
+                                    </label>
+                                ` : (!taskImg ? `<div class="text-center py-2 text-[11px] text-gray-500 italic">لم يتم إرفاق صورة بعد</div>` : '')}
+                            </div>
                         </div>
                     </article>
                 `;
             }).join('');
             lucide.createIcons();
+        }
+
+        function uploadTeamImage(e, teamId) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                getActiveTask().teams.find(t => t.id === teamId).taskImage = evt.target.result;
+                saveAppState();
+                renderTeams();
+                showToast('تم إرفاق صورة الإنجاز بنجاح!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeTeamImage(teamId) {
+            if (!isAdminLoggedIn) return;
+            getActiveTask().teams.find(t => t.id === teamId).taskImage = '';
+            saveAppState();
+            renderTeams();
+            showToast('تم حذف الصورة');
+        }
+
+        function likeTeam(teamId) {
+            const team = getActiveTask().teams.find(t => t.id === teamId);
+            team.likesCount = (team.likesCount || 0) + 1;
+            saveAppState();
+            document.getElementById(`likes-${teamId}`).textContent = team.likesCount;
+            confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
+            showToast(`شكراً لمشاركتك الإعجاب بـ ${team.name}! ❤️`);
+        }
+
+        function openImageModal(imgSrc) {
+            document.getElementById('modal-preview-img').src = imgSrc;
+            openModal('image-modal');
         }
 
         function renderAnalyticsSection() {
@@ -801,11 +875,9 @@
             document.getElementById('kpi-top-team').textContent = topTeam ? topTeam.name : '—';
             document.getElementById('kpi-total-tasks').textContent = `${gradeData.tasks.length} مهمة`;
 
-            // حساب نسبة التحسن بناءً على عدد المهام
             const growthRate = +(gradeData.tasks.length * 4.8 + 9.5).toFixed(1);
             document.getElementById('overall-growth-rate').textContent = `+${growthRate}%`;
 
-            // رسم بياني أعمدة للفرق
             const ctxBar = document.getElementById('teamsBarChart').getContext('2d');
             if (teamsBarChartInstance) teamsBarChartInstance.destroy();
             teamsBarChartInstance = new Chart(ctxBar, {
@@ -829,7 +901,6 @@
                 }
             });
 
-            // رسم بياني خطي لتطور المهام
             const taskLabels = gradeData.tasks.map((t, idx) => `المهمة ${idx+1}`);
             const taskAverages = gradeData.tasks.map(tsk => {
                 const tSum = tsk.teams.reduce((acc, tm) => acc + getTeamTotalScore(tm), 0);
