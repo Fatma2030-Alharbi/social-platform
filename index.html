@@ -164,6 +164,10 @@
                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                         وضع المشاهدة والاستعراض
                     </span>
+                    <button onclick="manualSaveNow()" class="admin-only hidden inline-flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-extrabold bg-emerald-600 hover:bg-emerald-500 text-white shadow">
+                        <i data-lucide="save" class="w-3.5 h-3.5"></i>
+                        حفظ التعديلات الآن
+                    </button>
                 </div>
             </div>
         </div>
@@ -549,10 +553,19 @@
             }
         }
 
-        function saveAppState() {
+        function saveAppState(showAlert = false) {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-            } catch (e) {}
+                if (showAlert) showToast('تم حفظ جميع البيانات والصور في ذاكرة الجهاز بنجاح!');
+                return true;
+            } catch (e) {
+                showToast('⚠️ مساحة ذاكرة المتصفح ممتلئة! احذفي بعض الصور القديمة أو حمّلي نسخة احتياطية.');
+                return false;
+            }
+        }
+
+        function manualSaveNow() {
+            saveAppState(true);
         }
 
         function getActiveTask() {
@@ -569,10 +582,10 @@
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = 'bg-royal-950 text-gold-300 border-2 border-gold-500 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-bold';
-            toast.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5"></i><span>${message}</span>`;
+            toast.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5 shrink-0"></i><span>${message}</span>`;
             container.appendChild(toast);
             lucide.createIcons();
-            setTimeout(() => toast.remove(), 3000);
+            setTimeout(() => toast.remove(), 3500);
         }
 
         async function hashString(str) {
@@ -654,10 +667,11 @@
         }
 
         function logoutAdmin() {
+            saveAppState(false);
             isAdminLoggedIn = false;
             updateAuthUI();
             renderAll();
-            showToast('تم الخروج لوضع المشاهدة');
+            showToast('تم حفظ التعديلات والخروج لوضع المشاهدة');
         }
 
         function updateAuthUI() {
@@ -763,7 +777,7 @@
                         return `
                             <div class="flex items-center gap-2 bg-ivory-50 p-2 rounded-xl border border-gold-300/60">
                                 <span class="w-18 shrink-0 text-xs font-extrabold text-royal-900">${role.label}:</span>
-                                <input type="text" value="${name}" onchange="updateMember('${team.id}', '${role.key}', this.value)" placeholder="اسم الطالبة..." class="w-full bg-white px-2 py-1 rounded border text-xs font-bold outline-none">
+                                <input type="text" value="${name}" oninput="updateMember('${team.id}', '${role.key}', this.value)" placeholder="اسم الطالبة..." class="w-full bg-white px-2 py-1 rounded border text-xs font-bold outline-none">
                                 ${name ? `<button onclick="clearMember('${team.id}', '${role.key}')" class="text-red-600"><i data-lucide="user-x" class="w-3.5 h-3.5"></i></button>` : ''}
                             </div>
                         `;
@@ -779,7 +793,7 @@
                                 <span class="text-[11px] font-bold text-royal-900 block mb-1">${c.label}</span>
                                 <div class="flex justify-center items-center gap-1">
                                     <button onclick="adjustScore('${team.id}', '${c.key}', -1)" class="w-6 h-6 bg-white rounded border font-bold">-</button>
-                                    <input type="number" value="${val}" onchange="setScore('${team.id}', '${c.key}', this.value)" class="w-10 text-center rounded bg-white border font-black text-xs">
+                                    <input type="number" value="${val}" oninput="setScore('${team.id}', '${c.key}', this.value)" class="w-10 text-center rounded bg-white border font-black text-xs">
                                     <button onclick="adjustScore('${team.id}', '${c.key}', 1)" class="w-6 h-6 bg-royal-900 text-gold-300 rounded font-bold">+</button>
                                 </div>
                             </div>
@@ -838,8 +852,8 @@
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 500;
-                    const MAX_HEIGHT = 500;
+                    const MAX_WIDTH = 320;
+                    const MAX_HEIGHT = 320;
                     let width = img.width;
                     let height = img.height;
 
@@ -853,12 +867,17 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
 
-                    getActiveTask().teams.find(t => t.id === teamId).taskImage = dataUrl;
-                    saveAppState();
-                    renderTeams();
-                    showToast('تم رفع الصورة فوراً!');
+                    const team = getActiveTask().teams.find(t => t.id === teamId);
+                    const oldImage = team.taskImage;
+                    team.taskImage = dataUrl;
+                    if (saveAppState(false)) {
+                        renderTeams();
+                        showToast('تم رفع وحفظ الصورة بنجاح!');
+                    } else {
+                        team.taskImage = oldImage;
+                    }
                 };
                 img.src = evt.target.result;
             };
@@ -868,15 +887,15 @@
         function removeTeamImage(teamId) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).taskImage = '';
-            saveAppState();
+            saveAppState(false);
             renderTeams();
-            showToast('تم حذف الصورة');
+            showToast('تم حذف الصورة وحفظ التغيير');
         }
 
         function likeTeam(teamId) {
             const team = getActiveTask().teams.find(t => t.id === teamId);
             team.likesCount = (team.likesCount || 0) + 1;
-            saveAppState();
+            saveAppState(false);
             document.getElementById(`likes-${teamId}`).textContent = team.likesCount;
             confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
             showToast(`شكراً لمشاركتك الإعجاب بـ ${team.name}! ❤️`);
@@ -964,13 +983,13 @@
         function updateMember(teamId, roleKey, val) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).members[roleKey] = val.trim();
-            saveAppState();
+            saveAppState(false);
         }
 
         function clearMember(teamId, roleKey) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).members[roleKey] = '';
-            saveAppState();
+            saveAppState(false);
             renderTeams();
         }
 
@@ -978,7 +997,7 @@
             if (!isAdminLoggedIn) return;
             const team = getActiveTask().teams.find(t => t.id === teamId);
             team.scores[criterionKey] = Math.max(0, (Number(team.scores[criterionKey]) || 0) + delta);
-            saveAppState();
+            saveAppState(false);
             renderPodium();
             renderTeams();
             renderAnalyticsSection();
@@ -988,9 +1007,8 @@
         function setScore(teamId, criterionKey, val) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).scores[criterionKey] = Math.max(0, Number(val) || 0);
-            saveAppState();
+            saveAppState(false);
             renderPodium();
-            renderTeams();
             renderAnalyticsSection();
         }
 
@@ -1033,7 +1051,7 @@
                 task.title = title;
                 task.day = day;
                 task.month = month;
-                showToast('تم تعديل المهمة بنجاح!');
+                if (saveAppState(false)) showToast('تم تعديل وحفظ المهمة بنجاح!');
             } else {
                 const newTask = {
                     id: 'task_' + Date.now() + '_' + currentGrade,
@@ -1045,10 +1063,9 @@
                 };
                 gradeData.tasks.push(newTask);
                 gradeData.activeTaskId = newTask.id;
-                showToast('تمت إضافة المهمة الجديدة بنجاح!');
+                if (saveAppState(false)) showToast('تمت إضافة وحفظ المهمة الجديدة بنجاح!');
             }
 
-            saveAppState();
             closeModal('task-modal');
             renderAll();
         }
@@ -1067,7 +1084,7 @@
 
         function switchTask(id) {
             appState.grades[currentGrade].activeTaskId = id;
-            saveAppState();
+            saveAppState(false);
             closeModal('annual-log-modal');
             renderAll();
         }
@@ -1086,10 +1103,9 @@
             const r = new FileReader();
             r.onload = function(evt) {
                 appState = JSON.parse(evt.target.result);
-                saveAppState();
+                saveAppState(true);
                 renderAll();
                 closeModal('backup-modal');
-                showToast('تمت استعادة البيانات بنجاح!');
             };
             r.readAsText(e.target.files[0]);
         }
