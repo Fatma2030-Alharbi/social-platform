@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
         tailwind.config = {
@@ -164,9 +165,13 @@
                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                         وضع المشاهدة والاستعراض
                     </span>
+                    <span id="cloud-status-badge" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-white/10 text-gold-200 border border-gold-400/30">
+                        <i data-lucide="cloud" class="w-3.5 h-3.5 text-gold-400"></i>
+                        جاري الاتصال بالسحابة...
+                    </span>
                     <button onclick="manualSaveNow()" class="admin-only hidden inline-flex items-center gap-1.5 px-4 py-1 rounded-full text-xs font-extrabold bg-emerald-600 hover:bg-emerald-500 text-white shadow">
-                        <i data-lucide="save" class="w-3.5 h-3.5"></i>
-                        حفظ التعديلات الآن
+                        <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+                        مزامنة وحفظ الآن
                     </button>
                 </div>
             </div>
@@ -350,7 +355,7 @@
                 </div>
                 <div>
                     <h2 class="text-xl sm:text-2xl font-black text-royal-950">الفرق التنافسية الستة والأدوار القيادية</h2>
-                    <p class="text-xs sm:text-sm text-royal-700">عرض مباشر للإنجازات والدرجات في الحصة ولولي الأمر</p>
+                    <p class="text-xs sm:text-sm text-royal-700">عرض مباشر ومتزامن للإنجازات والدرجات في الحصة ولولي الأمر</p>
                 </div>
             </div>
             <div id="teams-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
@@ -450,7 +455,7 @@
             <h3 class="text-xl font-black text-royal-950 mb-4">سجل المهام والإنجاز على مدار العام (1448هـ)</h3>
             <div id="annual-tasks-list" class="space-y-3 overflow-y-auto pr-1 flex-grow"></div>
             <div class="mt-5 pt-4 border-t flex justify-between items-center">
-                <button onclick="openNewTaskModal()" class="px-4 py-2 rounded-xl bg-royal-900 text-gold-300 text-xs font-bold flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> إضافة مهمة جديدة للصف الحالي</button>
+                <button onclick="openNewTaskModal()" class="admin-only hidden px-4 py-2 rounded-xl bg-royal-900 text-gold-300 text-xs font-bold flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i> إضافة مهمة جديدة للصف الحالي</button>
                 <button onclick="closeModal('annual-log-modal')" class="px-6 py-2.5 rounded-xl bg-ivory-200 text-sm font-bold">إغلاق</button>
             </div>
         </div>
@@ -470,6 +475,12 @@
     <div id="printable-report-area" class="hidden bg-white text-black p-8 max-w-[210mm] mx-auto" dir="rtl"></div>
 
     <script>
+        // إعدادات الربط السحابي Supabase
+        const SUPABASE_URL = 'https://koalvpmtcmbrihwttzlf.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_zdwA1LHMHNHOG1_O-P2Lsw_cSZm8a3q';
+        const PLATFORM_RECORD_ID = 'fatima_platform_main';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         const HIJRI_MONTHS_1448 = ["محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الثانية", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
         const TEAM_ROLES = [
             { key: 'leader', label: 'قائدة', icon: 'crown' },
@@ -503,6 +514,7 @@
         let currentGrade = 'grade4';
         let teamsBarChartInstance = null;
         let growthLineChartInstance = null;
+        let cloudSyncTimer = null;
 
         function createDefaultTeam(index) {
             return {
@@ -542,9 +554,9 @@
             };
         }
 
-        let appState = loadAppState();
+        let appState = loadLocalAppState();
 
-        function loadAppState() {
+        function loadLocalAppState() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 return raw ? JSON.parse(raw) : getDefaultState();
@@ -553,19 +565,91 @@
             }
         }
 
-        function saveAppState(showAlert = false) {
+        function updateCloudBadge(status, text) {
+            const badge = document.getElementById('cloud-status-badge');
+            if (!badge) return;
+            if (status === 'synced') {
+                badge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-emerald-900/90 text-emerald-200 border border-emerald-400/50';
+                badge.innerHTML = `<i data-lucide="cloud-check" class="w-3.5 h-3.5 text-emerald-400"></i> ${text}`;
+            } else if (status === 'saving') {
+                badge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-gold-500/20 text-gold-200 border border-gold-400/50';
+                badge.innerHTML = `<i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-gold-400 animate-spin"></i> ${text}`;
+            } else {
+                badge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-red-950/80 text-red-200 border border-red-400/40';
+                badge.innerHTML = `<i data-lucide="cloud-off" class="w-3.5 h-3.5 text-red-400"></i> ${text}`;
+            }
+            lucide.createIcons();
+        }
+
+        async function loadFromCloud() {
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-                if (showAlert) showToast('تم حفظ جميع البيانات والصور في ذاكرة الجهاز بنجاح!');
+                updateCloudBadge('saving', 'جاري جلب البيانات السحابية...');
+                const { data, error } = await supabaseClient
+                    .from('platform_state')
+                    .select('state')
+                    .eq('id', PLATFORM_RECORD_ID)
+                    .maybeSingle();
+
+                if (error) throw error;
+
+                if (data && data.state) {
+                    appState = data.state;
+                    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
+                    renderAll();
+                    updateCloudBadge('synced', 'متصل ومُحدّث سحابياً');
+                } else {
+                    // إذا كانت السحابة فارغة لأول مرة، ارفع البيانات الموجودة محلياً إن وجدت
+                    await pushToCloud(false);
+                }
+            } catch (err) {
+                console.error('Supabase load error:', err);
+                updateCloudBadge('error', 'وضع محلي (تعذر الاتصال بالسحابة)');
+            }
+        }
+
+        async function pushToCloud(showAlert = false) {
+            try {
+                updateCloudBadge('saving', 'جاري الحفظ في السحابة...');
+                const { error } = await supabaseClient
+                    .from('platform_state')
+                    .upsert({
+                        id: PLATFORM_RECORD_ID,
+                        state: appState,
+                        updated_at: new Date().toISOString()
+                    }, { onConflict: 'id' });
+
+                if (error) throw error;
+
+                updateCloudBadge('synced', 'محفوظ في السحابة ✓');
+                if (showAlert) showToast('تم الحفظ والمزامنة في السحابة! ستظهر التعديلات لولي الأمر فوراً.');
                 return true;
-            } catch (e) {
-                showToast('⚠️ مساحة ذاكرة المتصفح ممتلئة! احذفي بعض الصور القديمة أو حمّلي نسخة احتياطية.');
+            } catch (err) {
+                console.error('Supabase save error:', err);
+                updateCloudBadge('error', 'تعذر المزامنة السحابية');
+                if (showAlert) showToast('⚠️ تعذر الحفظ في السحابة، تحققي من اتصال الإنترنت.');
                 return false;
             }
         }
 
+        function saveAppState(showAlert = false, immediate = false) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {}
+
+            clearTimeout(cloudSyncTimer);
+            if (immediate) {
+                pushToCloud(showAlert);
+            } else {
+                updateCloudBadge('saving', 'جاري المزامنة...');
+                cloudSyncTimer = setTimeout(() => {
+                    pushToCloud(showAlert);
+                }, 600);
+            }
+            return true;
+        }
+
         function manualSaveNow() {
-            saveAppState(true);
+            saveAppState(true, true);
         }
 
         function getActiveTask() {
@@ -667,11 +751,11 @@
         }
 
         function logoutAdmin() {
-            saveAppState(false);
+            saveAppState(false, true);
             isAdminLoggedIn = false;
             updateAuthUI();
             renderAll();
-            showToast('تم حفظ التعديلات والخروج لوضع المشاهدة');
+            showToast('تم حفظ التعديلات سحابياً والخروج لوضع المشاهدة');
         }
 
         function updateAuthUI() {
@@ -692,7 +776,7 @@
 
         function sharePlatformLink() {
             navigator.clipboard.writeText(window.location.href);
-            showToast('تم نسخ رابط المنصة بنجاح!');
+            showToast('تم نسخ رابط المنصة لمشاركته مع أولياء الأمور!');
         }
 
         function openInfoModal(type) {
@@ -852,8 +936,8 @@
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 320;
-                    const MAX_HEIGHT = 320;
+                    const MAX_WIDTH = 340;
+                    const MAX_HEIGHT = 340;
                     let width = img.width;
                     let height = img.height;
 
@@ -867,17 +951,12 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.55);
 
                     const team = getActiveTask().teams.find(t => t.id === teamId);
-                    const oldImage = team.taskImage;
                     team.taskImage = dataUrl;
-                    if (saveAppState(false)) {
-                        renderTeams();
-                        showToast('تم رفع وحفظ الصورة بنجاح!');
-                    } else {
-                        team.taskImage = oldImage;
-                    }
+                    saveAppState(true, true);
+                    renderTeams();
                 };
                 img.src = evt.target.result;
             };
@@ -887,15 +966,15 @@
         function removeTeamImage(teamId) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).taskImage = '';
-            saveAppState(false);
+            saveAppState(false, true);
             renderTeams();
-            showToast('تم حذف الصورة وحفظ التغيير');
+            showToast('تم حذف الصورة وحفظ التغيير سحابياً');
         }
 
         function likeTeam(teamId) {
             const team = getActiveTask().teams.find(t => t.id === teamId);
             team.likesCount = (team.likesCount || 0) + 1;
-            saveAppState(false);
+            saveAppState(false, false);
             document.getElementById(`likes-${teamId}`).textContent = team.likesCount;
             confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
             showToast(`شكراً لمشاركتك الإعجاب بـ ${team.name}! ❤️`);
@@ -983,13 +1062,13 @@
         function updateMember(teamId, roleKey, val) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).members[roleKey] = val.trim();
-            saveAppState(false);
+            saveAppState(false, false);
         }
 
         function clearMember(teamId, roleKey) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).members[roleKey] = '';
-            saveAppState(false);
+            saveAppState(false, true);
             renderTeams();
         }
 
@@ -997,7 +1076,7 @@
             if (!isAdminLoggedIn) return;
             const team = getActiveTask().teams.find(t => t.id === teamId);
             team.scores[criterionKey] = Math.max(0, (Number(team.scores[criterionKey]) || 0) + delta);
-            saveAppState(false);
+            saveAppState(false, false);
             renderPodium();
             renderTeams();
             renderAnalyticsSection();
@@ -1007,7 +1086,7 @@
         function setScore(teamId, criterionKey, val) {
             if (!isAdminLoggedIn) return;
             getActiveTask().teams.find(t => t.id === teamId).scores[criterionKey] = Math.max(0, Number(val) || 0);
-            saveAppState(false);
+            saveAppState(false, false);
             renderPodium();
             renderAnalyticsSection();
         }
@@ -1051,7 +1130,7 @@
                 task.title = title;
                 task.day = day;
                 task.month = month;
-                if (saveAppState(false)) showToast('تم تعديل وحفظ المهمة بنجاح!');
+                saveAppState(true, true);
             } else {
                 const newTask = {
                     id: 'task_' + Date.now() + '_' + currentGrade,
@@ -1063,7 +1142,7 @@
                 };
                 gradeData.tasks.push(newTask);
                 gradeData.activeTaskId = newTask.id;
-                if (saveAppState(false)) showToast('تمت إضافة وحفظ المهمة الجديدة بنجاح!');
+                saveAppState(true, true);
             }
 
             closeModal('task-modal');
@@ -1084,7 +1163,7 @@
 
         function switchTask(id) {
             appState.grades[currentGrade].activeTaskId = id;
-            saveAppState(false);
+            saveAppState(false, true);
             closeModal('annual-log-modal');
             renderAll();
         }
@@ -1103,7 +1182,7 @@
             const r = new FileReader();
             r.onload = function(evt) {
                 appState = JSON.parse(evt.target.result);
-                saveAppState(true);
+                saveAppState(true, true);
                 renderAll();
                 closeModal('backup-modal');
             };
@@ -1116,6 +1195,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderAll();
             lucide.createIcons();
+            loadFromCloud();
         });
     </script>
 </body>
