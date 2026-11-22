@@ -4,19 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة الإبداع والتميز في الدراسات الاجتماعية</title>
-    <!-- خطوط عربية فخمة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- مكتبة أيقونات Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- مكتبة تصدير PDF الاحترافية -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- مكتبة الرسوم البيانية Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- مكتبة المؤثرات الاحتفالية -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
@@ -267,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- بطاقات مؤشرات الأداء السريعة -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-ivory-50 p-4 rounded-2xl border border-gold-300/60 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-emerald-900 text-gold-400 flex items-center justify-center"><i data-lucide="award" class="w-5 h-5"></i></div>
@@ -299,7 +292,6 @@
                 </div>
             </div>
 
-            <!-- الرسوم البيانية التفاعلية -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
                 <div class="bg-white p-5 rounded-2xl border border-gold-300/50 shadow-sm space-y-3">
                     <h3 class="text-sm font-extrabold text-royal-950 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4 text-gold-600"></i> مقارنة درجات الفرق في المهمة الحالية</h3>
@@ -346,7 +338,7 @@
             <div id="values-badges-list" class="flex flex-wrap gap-2"></div>
         </section>
 
-        <!-- شبكة الفرق الستة مع إمكانية إرفاق صورة وإبداء الإعجاب -->
+        <!-- شبكة الفرق الستة -->
         <section class="space-y-4">
             <div class="flex items-center gap-2.5">
                 <div class="w-10 h-10 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center shadow">
@@ -354,7 +346,7 @@
                 </div>
                 <div>
                     <h2 class="text-xl sm:text-2xl font-black text-royal-950">الفرق التنافسية الستة والأدوار القيادية</h2>
-                    <p class="text-xs sm:text-sm text-royal-700">يمكنكِ تعديل الأسماء والدرجات وإرفاق صور الإنجاز ليشاهدها أولياء الأمور والمجتمع المدرسي</p>
+                    <p class="text-xs sm:text-sm text-royal-700">عرض مباشر للإنجازات والدرجات في الحصة ولولي الأمر</p>
                 </div>
             </div>
             <div id="teams-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
@@ -375,7 +367,7 @@
         </div>
     </footer>
 
-    <!-- نافذة معلومات الرؤية والرسالة -->
+    <!-- النوافذ المنبثقة -->
     <div id="info-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('info-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -390,7 +382,6 @@
         </div>
     </div>
 
-    <!-- نافذة تسجيل الدخول -->
     <div id="auth-modal" class="fixed inset-0 bg-royal-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('auth-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -421,7 +412,6 @@
         </div>
     </div>
 
-    <!-- نافذة المهمة (تعديل أو إضافة جديدة) -->
     <div id="task-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('task-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -442,21 +432,6 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال رابط الصورة المباشر -->
-    <div id="url-modal" class="fixed inset-0 bg-royal-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 border-2 border-gold-500 shadow-2xl relative">
-            <button onclick="closeModal('url-modal')" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 class="text-lg font-black text-royal-950 mb-3">إدخال رابط صورة الإنجاز المباشر</h3>
-            <p class="text-xs text-royal-700 mb-3">أدخلي رابط الصورة المباشر (مثل رابط مرفوع على غيت هاب أو مراكز التحعيل) لضمان ظهورها لجميع الزوار عبر الإنترنت:</p>
-            <input type="url" id="direct-image-url" placeholder="https://example.com/image.jpg" class="w-full px-4 py-2.5 rounded-xl border border-royal-300 text-sm font-bold mb-4">
-            <div class="flex justify-end gap-2">
-                <button type="button" onclick="closeModal('url-modal')" class="px-4 py-2 rounded-xl bg-ivory-200 text-xs font-bold">إلغاء</button>
-                <button type="button" onclick="saveDirectImageUrl()" class="px-5 py-2 rounded-xl bg-royal-900 text-gold-300 text-xs font-extrabold">حفظ وعرض الصورة</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نافذة عرض الصورة بكامل الحجم -->
     <div id="image-modal" class="fixed inset-0 bg-royal-950/85 backdrop-blur-sm z-[120] hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-4 border-2 border-gold-500 shadow-2xl relative text-center">
             <button onclick="closeModal('image-modal')" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center z-10"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -465,7 +440,6 @@
         </div>
     </div>
 
-    <!-- نافذة سجل المهام السنوي -->
     <div id="annual-log-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative max-h-[88vh] flex flex-col">
             <button onclick="closeModal('annual-log-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -478,7 +452,6 @@
         </div>
     </div>
 
-    <!-- نافذة النسخ الاحتياطي -->
     <div id="backup-modal" class="fixed inset-0 bg-royal-950/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border-2 border-gold-500 shadow-2xl relative">
             <button onclick="closeModal('backup-modal')" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-ivory-200 text-royal-900 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -519,12 +492,11 @@
         ];
         const GRADE_NAMES = { grade4: 'الصف الرابع الابتدائي', grade5: 'الصف الخامس الابتدائي', grade6: 'الصف السادس الابتدائي' };
 
-        const STORAGE_KEY = 'fatima_social_studies_platform_v5';
-        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v5';
+        const STORAGE_KEY = 'fatima_social_studies_platform_v8';
+        const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v8';
 
         let isAdminLoggedIn = false;
         let currentGrade = 'grade4';
-        let activeImageTeamId = null;
         let teamsBarChartInstance = null;
         let growthLineChartInstance = null;
 
@@ -541,7 +513,7 @@
 
         function createDefaultTask(gradeKey) {
             return {
-                id: 'task_' + Date.now() + '_' + gradeKey,
+                id: 'task_' + gradeKey + '_1',
                 title: gradeKey === 'grade4' ? 'المفهوم الجغرافي والخريطة' : gradeKey === 'grade5' ? 'التاريخ الوطني والدولة السعودية الأولى' : 'رؤية المملكة 2030 ومقومات التنمية',
                 day: 15, month: 'ربيع الأول', year: '1448هـ',
                 teams: Array.from({ length: 6 }, (_, i) => createDefaultTeam(i))
@@ -549,14 +521,20 @@
         }
 
         function getDefaultState() {
-            const g4 = createDefaultTask('grade4'), g5 = createDefaultTask('grade5'), g6 = createDefaultTask('grade6');
+            const g4 = createDefaultTask('grade4');
+            const g5 = createDefaultTask('grade5');
+            const g6 = createDefaultTask('grade6');
             return {
                 infoContent: {
                     vision: 'الريادة والتميز في تعليم الدراسات الاجتماعية وبناء جيلٍ معتزٍ بدينه ووطنه المملكة العربية السعودية.',
                     mission: 'توفير بيئة صفية تفاعلية محفّزة قائمة على التعلم النشط والمهام الأدائية.',
                     governance: 'تلتزم هذه المنصة بضوابط حوكمة البيانات الوطنية وحماية البيانات الشخصية المعمول بها في المملكة العربية السعودية (سدايا).'
                 },
-                grades: { grade4: { activeTaskId: g4.id, tasks: [g4] }, grade5: { activeTaskId: g5.id, tasks: [g5] }, grade6: { activeTaskId: g6.id, tasks: [g6] } }
+                grades: {
+                    grade4: { activeTaskId: g4.id, tasks: [g4] },
+                    grade5: { activeTaskId: g5.id, tasks: [g5] },
+                    grade6: { activeTaskId: g6.id, tasks: [g6] }
+                }
             };
         }
 
@@ -566,11 +544,15 @@
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 return raw ? JSON.parse(raw) : getDefaultState();
-            } catch (e) { return getDefaultState(); }
+            } catch (e) {
+                return getDefaultState();
+            }
         }
 
         function saveAppState() {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {}
         }
 
         function getActiveTask() {
@@ -586,7 +568,7 @@
         function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `bg-royal-950 text-gold-300 border-2 border-gold-500 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-bold`;
+            toast.className = 'bg-royal-950 text-gold-300 border-2 border-gold-500 px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-bold';
             toast.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5"></i><span>${message}</span>`;
             container.appendChild(toast);
             lucide.createIcons();
@@ -600,7 +582,12 @@
         }
 
         function getStoredAuth() {
-            try { const raw = localStorage.getItem(AUTH_STORAGE_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+            try {
+                const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
         }
 
         function openAuthModal() {
@@ -703,7 +690,10 @@
             lucide.createIcons();
         }
 
-        function switchGrade(gradeKey) { currentGrade = gradeKey; renderAll(); }
+        function switchGrade(gradeKey) {
+            currentGrade = gradeKey;
+            renderAll();
+        }
 
         function renderAll() {
             ['grade4', 'grade5', 'grade6'].forEach(g => {
@@ -808,7 +798,6 @@
                             <div class="space-y-1.5">${rolesHTML}</div>
                             <div class="grid grid-cols-2 gap-2">${criteriaHTML}</div>
 
-                            <!-- قسم صورة إنجاز الفريق والإعجابات -->
                             <div class="pt-2 border-t border-gold-300/40 space-y-2">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-royal-900 flex items-center gap-1"><i data-lucide="image" class="w-3.5 h-3.5 text-gold-600"></i> إنجاز المهمة:</span>
@@ -820,24 +809,18 @@
 
                                 ${taskImg ? `
                                     <div class="relative group rounded-xl overflow-hidden border border-gold-400 bg-ivory-100">
-                                        <img src="${taskImg}" onclick="openImageModal('${taskImg}')" class="w-full h-32 object-cover cursor-pointer hover:scale-105 transition duration-300" alt="صورة إنجاز الفريق">
-                                        ${isAdminLoggedIn ? `<button onclick="removeTeamImage('${team.id}')" class="absolute top-2 left-2 bg-red-600 text-white p-1 rounded-lg text-xs shadow"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                                        <img src="${taskImg}" onclick="openImageModal('${taskImg}')" class="w-full h-36 object-cover cursor-pointer hover:scale-105 transition duration-300" alt="صورة إنجاز ${team.name}">
+                                        ${isAdminLoggedIn ? `<button type="button" onclick="removeTeamImage('${team.id}')" title="حذف الصورة" class="absolute top-2 left-2 bg-red-600 text-white p-1.5 rounded-lg text-xs shadow"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
                                     </div>
                                 ` : ''}
 
                                 ${isAdminLoggedIn ? `
-                                    <div class="flex gap-2">
-                                        <label class="w-1/2 py-2 px-2 rounded-xl bg-ivory-100 hover:bg-gold-100 text-royal-950 border border-dashed border-gold-400 text-xs font-bold cursor-pointer flex items-center justify-center gap-1 transition">
-                                            <i data-lucide="upload" class="w-3.5 h-3.5 text-royal-800"></i>
-                                            <span>رفع ملف</span>
-                                            <input type="file" accept="image/*" onchange="compressAndUploadImage(event, '${team.id}')" class="hidden">
-                                        </label>
-                                        <button onclick="openUrlModal('${team.id}')" class="w-1/2 py-2 px-2 rounded-xl bg-royal-900 text-gold-300 hover:bg-royal-800 text-xs font-bold flex items-center justify-center gap-1 transition shadow-sm">
-                                            <i data-lucide="link" class="w-3.5 h-3.5 text-gold-400"></i>
-                                            <span>رابط مباشر</span>
-                                        </button>
-                                    </div>
-                                ` : (!taskImg ? `<div class="text-center py-2 text-[11px] text-gray-500 italic">لم يتم إرفاق صورة بعد</div>` : '')}
+                                    <label class="w-full py-2.5 px-3 rounded-xl bg-royal-900 hover:bg-royal-800 text-gold-300 text-xs font-extrabold cursor-pointer flex items-center justify-center gap-2 transition shadow-sm">
+                                        <i data-lucide="camera" class="w-4 h-4 text-gold-400"></i>
+                                        <span>${taskImg ? 'تغيير صورة الإنجاز فوراً' : 'رفع صورة الإنجاز فوراً'}</span>
+                                        <input type="file" accept="image/*" onchange="compressAndUploadImage(event, '${team.id}')" class="hidden">
+                                    </label>
+                                ` : (!taskImg ? `<div class="text-center py-2 text-[11px] text-royal-700/75 bg-ivory-50 rounded-xl border border-dashed border-gold-300">بانتظار إضافة صورة الإنجاز</div>` : '')}
                             </div>
                         </div>
                     </article>
@@ -846,8 +829,8 @@
             lucide.createIcons();
         }
 
-        // ضغط وتصغير الصور تلقائياً لتعمل بكفاءة
         function compressAndUploadImage(e, teamId) {
+            if (!isAdminLoggedIn) return;
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
@@ -855,8 +838,8 @@
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 600;
-                    const MAX_HEIGHT = 600;
+                    const MAX_WIDTH = 500;
+                    const MAX_HEIGHT = 500;
                     let width = img.width;
                     let height = img.height;
 
@@ -870,33 +853,16 @@
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
 
                     getActiveTask().teams.find(t => t.id === teamId).taskImage = dataUrl;
                     saveAppState();
                     renderTeams();
-                    showToast('تم ضغط وإرفاق صورة الإنجاز بنجاح!');
-                }
+                    showToast('تم رفع الصورة فوراً!');
+                };
                 img.src = evt.target.result;
             };
             reader.readAsDataURL(file);
-        }
-
-        function openUrlModal(teamId) {
-            activeImageTeamId = teamId;
-            document.getElementById('direct-image-url').value = '';
-            openModal('url-modal');
-        }
-
-        function saveDirectImageUrl() {
-            const url = document.getElementById('direct-image-url').value.trim();
-            if (url && activeImageTeamId) {
-                getActiveTask().teams.find(t => t.id === activeImageTeamId).taskImage = url;
-                saveAppState();
-                renderTeams();
-                closeModal('url-modal');
-                showToast('تم تحديث رابط الصورة المباشر بنجاح!');
-            }
         }
 
         function removeTeamImage(teamId) {
@@ -1131,7 +1097,10 @@
         function openModal(id) { document.getElementById(id).classList.add('flex'); document.getElementById(id).classList.remove('hidden'); lucide.createIcons(); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
-        window.addEventListener('DOMContentLoaded', () => { renderAll(); lucide.createIcons(); });
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>
