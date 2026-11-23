@@ -447,10 +447,33 @@
 
         const STORAGE_KEY = 'fatima_social_studies_platform_v8';
         const AUTH_STORAGE_KEY = 'fatima_social_studies_admin_auth_v8';
+        const LIKES_STORAGE_KEY = 'fatima_social_studies_visitor_likes_v1';
 
         let isAdminLoggedIn = false;
         let currentGrade = 'grade4';
         let cloudSyncTimer = null;
+
+        function getVisitorLikesMap() {
+            try {
+                const raw = localStorage.getItem(LIKES_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function hasVisitorLikedTeam(taskId, teamId) {
+            const likesMap = getVisitorLikesMap();
+            return Boolean(likesMap[`${currentGrade}_${taskId}_${teamId}`]);
+        }
+
+        function markVisitorLikedTeam(taskId, teamId) {
+            const likesMap = getVisitorLikesMap();
+            likesMap[`${currentGrade}_${taskId}_${teamId}`] = true;
+            try {
+                localStorage.setItem(LIKES_STORAGE_KEY, JSON.stringify(likesMap));
+            } catch (e) {}
+        }
 
         function createDefaultTeam(index) {
             return {
@@ -788,6 +811,7 @@
                 const total = getTeamTotalScore(team);
                 const likes = team.likesCount || 0;
                 const taskImg = team.taskImage || '';
+                const alreadyLiked = hasVisitorLikedTeam(task.id, team.id);
 
                 const rolesHTML = TEAM_ROLES.map(role => {
                     const name = team.members[role.key] || '';
@@ -833,9 +857,9 @@
                             <div class="pt-2 border-t border-gold-300/40 space-y-2">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-royal-900 flex items-center gap-1"><i data-lucide="image" class="w-3.5 h-3.5 text-gold-600"></i> إنجاز المهمة:</span>
-                                    <button onclick="likeTeam('${team.id}')" class="flex items-center gap-1 px-3 py-1 rounded-full bg-gold-100 hover:bg-gold-200 text-royal-950 text-xs font-black border border-gold-400 transition shadow-sm">
-                                        <i data-lucide="heart" class="w-3.5 h-3.5 text-red-600 fill-red-500"></i>
-                                        <span>إعجاب (<span id="likes-${team.id}">${likes}</span>)</span>
+                                    <button onclick="likeTeam('${team.id}')" aria-pressed="${alreadyLiked}" class="flex items-center gap-1 px-3 py-1 rounded-full ${alreadyLiked ? 'bg-red-50 text-red-700 border-red-300' : 'bg-gold-100 hover:bg-gold-200 text-royal-950 border-gold-400'} text-xs font-black border transition shadow-sm">
+                                        <i data-lucide="heart" class="w-3.5 h-3.5 text-red-600 ${alreadyLiked ? 'fill-red-600' : 'fill-red-500'}"></i>
+                                        <span>${alreadyLiked ? 'تم الإعجاب' : 'إعجاب'} (<span id="likes-${team.id}">${likes}</span>)</span>
                                     </button>
                                 </div>
 
@@ -906,10 +930,19 @@
         }
 
         function likeTeam(teamId) {
-            const team = getActiveTask().teams.find(t => t.id === teamId);
+            const task = getActiveTask();
+            const team = task.teams.find(t => t.id === teamId);
+            if (!team) return;
+
+            if (hasVisitorLikedTeam(task.id, team.id)) {
+                showToast(`لقد سجّلتِ إعجابكِ بـ ${team.name} مسبقاً في هذه المهمة.`);
+                return;
+            }
+
             team.likesCount = (team.likesCount || 0) + 1;
+            markVisitorLikedTeam(task.id, team.id);
             saveAppState(false, false);
-            document.getElementById(`likes-${teamId}`).textContent = team.likesCount;
+            renderTeams();
             confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
             showToast(`شكراً لمشاركتك الإعجاب بـ ${team.name}! ❤️`);
         }
